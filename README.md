@@ -8,12 +8,17 @@ Una app en Android y iOS que vamos a hacer con unos amigos por el amor al arte,
 para enseñarles a programar algo más o menos complejo y que todos necesitamos siempre.
 
 Para que lo copien y comiencen a programar aplicaciones nativas, y se integren al equipo o generen
-proyectos, negocios y dinero programando.
+proyectos propios y negocios programando profesionalmente.
 
 En esta versión ocuparemos las tecnologías propietarias de Google (Maps, Firebase Hosting)
 
 Lo que hay que hacer:
 - Cargar Google Map
-- Cargar BD local con las fotos y coordenadas)
+- Cargar BD local (SQLite) con las fotos y coordenadas
 - Poner los puntos de interés en el mapa
+- Abrir panel con información de la foto (Material Design)
 -
+
+## Requisitos
+- Android Studio
+- Llave de Google Maps

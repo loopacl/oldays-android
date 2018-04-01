@@ -9,10 +9,15 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import android.support.design.widget.BottomSheetBehavior
+import android.view.View
+
 
 class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+
+    private var mBottomSheetBehavior1: BottomSheetBehavior<*>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +26,11 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
+        val bottomSheet = findViewById<View>(R.id.bottom_sheet1)
+        mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet)
+
     }
 
     /**

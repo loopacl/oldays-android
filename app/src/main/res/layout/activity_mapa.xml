@@ -1,8 +1,65 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bgLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cl.loopa.android.photogooglemapkotlin.Mapa" />
+    tools:context="cl.loopa.android.photogooglemapkotlin.Mapa">
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="cl.loopa.android.photogooglemapkotlin.Mapa" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <Button
+            android:id="@+id/button_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_activity_mapa"
+            android:padding="16dp"
+            android:layout_margin="8dp"/>
+
+    </ScrollView>
+
+    <!-- BottomSheet https://www.androidauthority.com/bottom-sheets-707252/ -->
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/bottom_sheet1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="true"
+        android:background="@android:color/holo_blue_bright"
+        app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/loading"
+                android:textSize="16sp"
+                android:textAllCaps="true"
+                android:padding="16dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/lorem"
+                android:padding="16dp"
+                android:textSize="16sp"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+
+</android.support.design.widget.CoordinatorLayout>
