@@ -1,4 +1,4 @@
-package cl.loopa.android.photogooglemapkotlin
+package cl.loopa.android.oldays
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle

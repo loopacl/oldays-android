@@ -1,4 +1,4 @@
-package cl.loopa.android.photogooglemapkotlin
+package cl.loopa.android.oldays
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
