@@ -10,14 +10,12 @@ para enseñarles a programar algo más o menos complejo y que todos necesitamos 
 Para que lo copien y comiencen a programar aplicaciones nativas, y se integren al equipo o generen
 proyectos propios y negocios programando profesionalmente.
 
-En esta versión ocuparemos las tecnologías propietarias de Google (Maps, Firebase Hosting)
+En esta versión ocuparemos las tecnologías propietarias de Google Maps
 
-Lo que hay que hacer:
-- Cargar Google Map
-- Cargar BD local (SQLite) con las fotos y coordenadas
+Lo que falta por hacer:
 - Poner los puntos de interés en el mapa
 - Abrir panel con información de la foto (Material Design)
--
+- ¿Integrar ARcore?
 
 ## Requisitos
 - Android Studio
