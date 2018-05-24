@@ -1,4 +1,4 @@
-# kotlin-photo-google-map
+# Oldays para Android
 
 La app consiste en un mapa donde aparecen puntos de interés con fotos antiguas de esos lugares.
 Al tocar uno de esos puntos se abrirá una pantalla con información sobre la foto
