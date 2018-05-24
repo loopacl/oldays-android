@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="cl.loopa.android.photogooglemapkotlin.Mapa" />
-    <ScrollView
+    <!--<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -27,10 +27,10 @@
             android:padding="16dp"
             android:layout_margin="8dp"/>
 
-    </ScrollView>
+    </ScrollView>-->
 
     <!-- BottomSheet https://www.androidauthority.com/bottom-sheets-707252/ -->
-    <android.support.v4.widget.NestedScrollView
+    <!--<android.support.v4.widget.NestedScrollView
         android:id="@+id/bottom_sheet1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -58,7 +58,7 @@
                 android:padding="16dp"
                 android:textSize="16sp"/>
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>-->
 
 
 

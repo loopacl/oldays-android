@@ -11,6 +11,9 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import android.support.design.widget.BottomSheetBehavior
 import android.view.View
+import com.google.maps.android.data.kml.KmlLayer
+
+
 
 
 class Mapa : AppCompatActivity(), OnMapReadyCallback {
@@ -28,8 +31,10 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
 
-        val bottomSheet = findViewById<View>(R.id.bottom_sheet1)
-        mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet)
+        /*val bottomSheet = findViewById<View>(R.id.bottom_sheet1)
+        mBottomSheetBehavior1 = BottomSheetBehavior.from(bottomSheet)*/
+
+        //http://www.google.com/maps/d/kml?forcekml=1&mid=1X17DMfvcAVNH0qbrX-jJqSDDoAsHQYf6
 
     }
 
@@ -46,8 +51,15 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
+        /*val sydney = LatLng(-34.0, 151.0)
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
+
+        //https://developers.google.com/maps/documentation/android-sdk/utility/kml
+        val layer = KmlLayer(mMap, R.raw.Oldays, applicationContext)
+
+        layer.addLayerToMap()
+
+
     }
 }
