@@ -1,5 +1,7 @@
 package cl.loopa.android.oldays
 
+import android.content.Context
+import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
@@ -7,6 +9,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import android.support.design.widget.BottomSheetBehavior
+import android.view.ViewGroup
+import com.google.android.gms.maps.MapFragment
 import com.google.maps.android.data.kml.KmlLayer
 
 
@@ -34,6 +38,7 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -51,11 +56,30 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
 
-        //https://developers.google.com/maps/documentation/android-sdk/utility/kml
-        val layer = KmlLayer(mMap, R.raw.oldays, applicationContext)
 
-        layer.addLayerToMap()
 
+        /* Detecta si está conectado */
+        val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork = cm.activeNetworkInfo
+        val estaConectado = activeNetwork != null && activeNetwork.isConnectedOrConnecting
+
+        if (estaConectado) {
+
+            //Log.d("Nancy", "onMapReady: "+estaConectado);
+
+            //https://developers.google.com/maps/documentation/android-sdk/utility/kml
+            val layer = KmlLayer(mMap, R.raw.oldays, applicationContext)
+
+            layer.addLayerToMap()
+
+        } /*else {
+            val titulo_rss = findViewById(R.id.fecha_rss)
+            titulo_rss.setText("Sin Conexión")
+        }*/
 
     }
+
+
+
 }
+
