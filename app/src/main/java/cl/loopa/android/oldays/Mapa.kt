@@ -9,11 +9,20 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import android.support.design.widget.BottomSheetBehavior
+import android.util.Log
 import android.view.ViewGroup
 import com.google.android.gms.maps.MapFragment
 import com.google.maps.android.data.kml.KmlLayer
-
-
+import okhttp3.Request
+import okhttp3.Response
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
+import java.util.concurrent.TimeUnit
+import javax.xml.datatype.DatatypeConstants.SECONDS
+import okhttp3.OkHttpClient
+import android.os.StrictMode
+import android.view.View
 
 
 class Mapa : AppCompatActivity(), OnMapReadyCallback {
@@ -29,6 +38,11 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
+
+            val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+            StrictMode.setThreadPolicy(policy)
 
 
         /*val bottomSheet = findViewById<View>(R.id.bottom_sheet1)
@@ -57,7 +71,6 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
 
 
-
         /* Detecta si está conectado */
         val cm = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val activeNetwork = cm.activeNetworkInfo
@@ -67,16 +80,62 @@ class Mapa : AppCompatActivity(), OnMapReadyCallback {
 
             //Log.d("Nancy", "onMapReady: "+estaConectado);
 
-            //https://developers.google.com/maps/documentation/android-sdk/utility/kml
-            val layer = KmlLayer(mMap, R.raw.oldays, applicationContext)
+            val client = OkHttpClient()
 
-            layer.addLayerToMap()
+            val urlString = "http://www.google.com/maps/d/kml?forcekml=1&mid=1X17DMfvcAVNH0qbrX-jJqSDDoAsHQYf6"
+
+            val response: Response
+            try {
+                //client.setConnectTimeout(20, TimeUnit.SECONDS) // connect timeout
+                //client.setReadTimeout(20, TimeUnit.SECONDS)    // socket timeout
+                val request = Request.Builder()
+                        .url(urlString)
+                        .build()
+
+                response = client.newCall(request).execute()
+
+                val inpst = response.body()?.byteStream()
+
+                //https://developers.google.com/maps/documentation/android-sdk/utility/kml
+                val layer = KmlLayer(mMap, inpst, applicationContext)
+
+                layer.addLayerToMap()
+
+            } catch (e: Exception) {
+                throw e
+            }
+
+
+
 
         } /*else {
             val titulo_rss = findViewById(R.id.fecha_rss)
             titulo_rss.setText("Sin Conexión")
         }*/
 
+
+
+
+
+    }
+
+    fun onViewCreated(view: View, savedInstanceState: Bundle) {
+        val SDK_INT = android.os.Build.VERSION.SDK_INT
+        if (SDK_INT > 8) {
+            val policy = StrictMode.ThreadPolicy.Builder()
+                    .permitAll().build()
+            StrictMode.setThreadPolicy(policy)
+            //your codes here
+
+
+
+
+
+
+
+
+
+        }
     }
 
 
