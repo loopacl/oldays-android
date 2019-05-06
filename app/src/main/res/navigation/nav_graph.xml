@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- https://github.com/umangburman/Navigation-Drawer-With-Navigation-Component -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/defaultFragment">
+
+    <fragment
+        android:id="@+id/defaultFragment"
+        android:name="cl.loopa.android.oldays.OldaysMapFragment"
+        android:label="@string/title_fragment_oldays_map"
+        tools:layout="@layout/fragment_oldays_map" >
+    </fragment>
+
+</navigation>
