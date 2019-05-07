@@ -7,7 +7,6 @@
 
     <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
         android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         map:cameraZoom="13"
@@ -15,6 +14,7 @@
         map:cameraTargetLng="-70.1398506"
         map:uiZoomControls="true"
         map:uiZoomGestures="true"
-        tools:context="cl.loopa.android.oldays.OldaysMapFragment" />
+        tools:context="cl.loopa.android.oldays.OldaysMapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
 
 </FrameLayout>

@@ -10,19 +10,30 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapFragment
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import android.hardware.SensorManager
 import android.net.Network
 import android.os.StrictMode
 import android.util.Log
 import androidx.core.content.ContextCompat.getSystemService
-import org.osmdroid.bonuspack.kml.KmlDocument
-import org.osmdroid.bonuspack.kml.KmlFeature
+
 import android.net.NetworkInfo
 import android.widget.Toast
+import com.google.android.gms.maps.*
+
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+
+
+import org.osmdroid.bonuspack.kml.KmlDocument
+import org.osmdroid.bonuspack.kml.KmlFeature
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.GoogleMap
+
+
+
+//import android.R
+
+
 
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback {
@@ -39,21 +50,30 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val mapFragment : MapFragment = MapFragment.newInstance()
-        mapFragment.getMapAsync(this)
 /*
+        try {
+            MapsInitializer.initialize(activity!!.applicationContext)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }*/
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)*/
+        // Androix dropped support libraries... support
+        //
+        var mapFragment : SupportMapFragment = SupportMapFragment.newInstance()
+        //mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        childFragmentManager.beginTransaction().add(R.id.map, mapFragment, "tag").commit()
+        mapFragment.getMapAsync(this)
 
         return inflater.inflate(R.layout.fragment_oldays_map, container, false)
+
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
         // TODO: Use the ViewModel
+
     }
 
 
@@ -61,18 +81,16 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         mMap = googleMap
 
         // Add a marker in Sydney and move the camera
-        /*val sydney = LatLng(-34.0, 151.0)
-        mMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
+        val iquique = LatLng(-20.2304908,-70.1398506)
+        mMap.addMarker(MarkerOptions().position(iquique).title("Iquique glorioso"))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,13f))
 
-        mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
-        Log.d("Conectado", "Hola")
+        //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
 
-        cargaKML()
-
+        //cargaKML()
     }
 
-
+/*
     fun cargaKML() {
 
         if (estaConectado()) {
@@ -160,7 +178,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         }
 
     }
-
+*/
 
     /* DETECTAR SI HAY CONEXION */
     fun estaConectado(): Boolean {
