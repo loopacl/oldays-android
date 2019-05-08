@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+    <name>Oldays</name>
+    <description/>
+    <Style id="icon-1899-0288D1-normal">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>0</scale>
+      </LabelStyle>
+    </Style>
+    <Style id="icon-1899-0288D1-highlight">
+      <IconStyle>
+        <color>ffd18802</color>
+        <scale>1</scale>
+        <Icon>
+          <href>http://www.gstatic.com/mapspro/images/stock/503-wht-blank_maps.png</href>
+        </Icon>
+        <hotSpot x="32" xunits="pixels" y="64" yunits="insetPixels"/>
+      </IconStyle>
+      <LabelStyle>
+        <scale>1</scale>
+      </LabelStyle>
+    </Style>
+    <StyleMap id="icon-1899-0288D1">
+      <Pair>
+        <key>normal</key>
+        <styleUrl>#icon-1899-0288D1-normal</styleUrl>
+      </Pair>
+      <Pair>
+        <key>highlight</key>
+        <styleUrl>#icon-1899-0288D1-highlight</styleUrl>
+      </Pair>
+    </StyleMap>
+    <Folder>
+      <name>1850-1900</name>
+      <Placemark>
+        <name>Liceo de Hombres (actualmente Bernardo O`Higgins) 1890</name>
+        <description><![CDATA[<img src="https://lh3.googleusercontent.com/87YbyTo66Mfq_2CpCwyihy5coohQ7wX9HcDG9-Ivzw8U4Zu0FFg2JXZ3myUk3N2FMXRa6TEEVOPFVRK5dZmI2NODpiJB1leeoigd5obYP9lUJHB6OZuHH4AV-KyxbqYjwuP18rk" height="200" width="auto" /><br><br>Mediante el Decreto Supremo Nº 1.018 del 8 de abril de 1886 fue creado el Liceo de iquique, cuyo documento fue firmado por el<br>Presidente de la República de Chile de ese entonces. Excelentísimo señor Domingo Santa María y su Ministro de Justicia, Culto e instrucción Pública, don E. Crisólogo Rojas. Sin embargo, cuando Iquique estaba bajo la administración peruana, se apunta históricamente que le Liceo de Iquique se creó el 4 de octubre de 1862, pero este jamás inició sus clases como liceo, sólo como escuela y en muy malas condiciones con un único profesor de enseñanza primaria.]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh3.googleusercontent.com/87YbyTo66Mfq_2CpCwyihy5coohQ7wX9HcDG9-Ivzw8U4Zu0FFg2JXZ3myUk3N2FMXRa6TEEVOPFVRK5dZmI2NODpiJB1leeoigd5obYP9lUJHB6OZuHH4AV-KyxbqYjwuP18rk</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1521736,-20.2198885,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Puerto</name>
+        <description><![CDATA[<img src="https://lh5.googleusercontent.com/PlW5dPw7ZC5hergE44bbvdZUHfKA9EuFT7r-AyR9m04r8VTmLk7qpzZeK7BsB-9XJzoY5x7w9K5PTkolqIEdemLH4iDSsehY0P-GL_DMUN18bxYQM1vCbriKaD-cVQ9-Oelf" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh5.googleusercontent.com/PlW5dPw7ZC5hergE44bbvdZUHfKA9EuFT7r-AyR9m04r8VTmLk7qpzZeK7BsB-9XJzoY5x7w9K5PTkolqIEdemLH4iDSsehY0P-GL_DMUN18bxYQM1vCbriKaD-cVQ9-Oelf</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.153563,-20.2118997,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Teatro Municipal  1899</name>
+        <description><![CDATA[<img src="https://lh3.googleusercontent.com/f21UhIDJRHDzHIq65oX_1Dt7mQEDhI63ax-AXxITajDhVqzrgJDhSGQWDuenqybHKHuRMcOk6rd7HMp4MCvKYdiEgKcZ2rZgRzjKIbV58B4kzoOZEOPBtLxU99MouzkKu2NGDg" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh3.googleusercontent.com/f21UhIDJRHDzHIq65oX_1Dt7mQEDhI63ax-AXxITajDhVqzrgJDhSGQWDuenqybHKHuRMcOk6rd7HMp4MCvKYdiEgKcZ2rZgRzjKIbV58B4kzoOZEOPBtLxU99MouzkKu2NGDg</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1523829,-20.2145677,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Teatro Municipal 1906</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/vOi58cH1HQD1M4gb8jlj6vg8S8yOrPeJiip1QlZWfCVoVGaCcU6K2ymr-LdgEQxdo7qdY1PmJ_d7-NGuD2WkGiG4MT1DqsMmT5L5TJ32hxYTDTMR22s4kMRAMwKlcwAfEbvrtA" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/vOi58cH1HQD1M4gb8jlj6vg8S8yOrPeJiip1QlZWfCVoVGaCcU6K2ymr-LdgEQxdo7qdY1PmJ_d7-NGuD2WkGiG4MT1DqsMmT5L5TJ32hxYTDTMR22s4kMRAMwKlcwAfEbvrtA</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.152458,-20.2145501,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Colonia Italiana 1850-1918</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/ExGEfZYBY5Y68onJN4uPjpFIXShPH-x5cIneI3W5-nU0bTZJF2_Gs0lbp4N2lGjtLP6uxdQSuUmtcqeW8a4AGQmsOFra1Z3-88OMTtaREZqlVoPU2NIoEVXmtT7-4F4QOVJHj1Q" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/ExGEfZYBY5Y68onJN4uPjpFIXShPH-x5cIneI3W5-nU0bTZJF2_Gs0lbp4N2lGjtLP6uxdQSuUmtcqeW8a4AGQmsOFra1Z3-88OMTtaREZqlVoPU2NIoEVXmtT7-4F4QOVJHj1Q</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1539117,-20.2152347,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Calle Tarapaca 1890-1918</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/QPe2XGeM5IpD160XfRj6x8rWJWtqmvNj-ZFD0JO_tPk10K672lg3zHesO0ChwfyTix8-ycDOzLTVuUmJg8oi6zaqKE49BNf5Wbo7jtfgJmD64oQ1Nrbpw931zHfPSMyLTyI1ow" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/QPe2XGeM5IpD160XfRj6x8rWJWtqmvNj-ZFD0JO_tPk10K672lg3zHesO0ChwfyTix8-ycDOzLTVuUmJg8oi6zaqKE49BNf5Wbo7jtfgJmD64oQ1Nrbpw931zHfPSMyLTyI1ow</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1511866,-20.2139611,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Anibal Pinto 1905</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/tdwE-0bsZm3-Hg2Q5BQZarkqGgPvZQ9iS1P2-_DcQzPL1maSv8OrHkpQhjGeaPaXKxekf9JlIjigqcz46YcRkUsLpKCwfBWLNWe26KpVt4NOsCWnjXiwmeet1rKsNFiLIFlBbw" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/tdwE-0bsZm3-Hg2Q5BQZarkqGgPvZQ9iS1P2-_DcQzPL1maSv8OrHkpQhjGeaPaXKxekf9JlIjigqcz46YcRkUsLpKCwfBWLNWe26KpVt4NOsCWnjXiwmeet1rKsNFiLIFlBbw</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1527906,-20.2125642,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Plaza Prat 1900</name>
+        <description><![CDATA[<img src="https://lh4.googleusercontent.com/COiqaR10oAYdNBOUjHPdt_MytWSgWkqIH-_sUEIDfI09z3hzwL30LgUiaq8uGHeDxgHcP-ECLOZcIsuJYmRqerzo8tig2GvxhGeQeYyjsPX0-N_Fcr9jtULPFr0iDsW16ERYDQ" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh4.googleusercontent.com/COiqaR10oAYdNBOUjHPdt_MytWSgWkqIH-_sUEIDfI09z3hzwL30LgUiaq8uGHeDxgHcP-ECLOZcIsuJYmRqerzo8tig2GvxhGeQeYyjsPX0-N_Fcr9jtULPFr0iDsW16ERYDQ</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1521629,-20.2136264,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Recova 1880 mercado en el tiempo del Perú,actual, Plaza Condel, </name>
+        <description><![CDATA[<img src="https://lh6.googleusercontent.com/CCJrOMQcknnfTSbuC9hEViPfoVIhz1m8QnscIvT_8KQZAI2y-WxtsplwxBBSfXCgwei6sZ-QpwrFkCF4bs9t95Hsm4vGvN5fBdgnVmzOY-PXz19NPXJfjtLrsHWten6VRpRE-P4" height="200" width="auto" /><br><br>“La Recova antigua, construida em 1862, se ubicaba frente a la iglesia vieja y nunca se pintó y la nueva se va a construir en la calle La Puntilla en los terrenos donde estuvo la Botica Alemana. En 1872 se inicia el levantamiento de planos para la Nueva Recova que en 1874 aún continúa sin terminar.<br><br>El antiguo Mercado Peruano (Recova) se quema en octubre de 1880 y el nuevo Mercado Central, diseñado por José Vargas frente a la plaza Condell, fue comenzado a construir el 9 de octubre de 1881, en el mismo sitio, y terminado el 10 de marzo de 1882 (pero sólo un piso de 700 mts2 de superficie). Los miembros de la Municipalidad que ejercían en esa época fueron: Maurice Jewell, David Mac-Iver, Silvestre Hesse y Meliton Mieres.<br><br>En 1892 coexistían dos mercados: el antiguo o Central situado en la Plaza Condell y el nuevo, en calle Patricio Lynch, entre O’Higgins y Bulnes”.]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh6.googleusercontent.com/CCJrOMQcknnfTSbuC9hEViPfoVIhz1m8QnscIvT_8KQZAI2y-WxtsplwxBBSfXCgwei6sZ-QpwrFkCF4bs9t95Hsm4vGvN5fBdgnVmzOY-PXz19NPXJfjtLrsHWten6VRpRE-P4</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1490301,-20.213946,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Plaza prat 1895</name>
+        <description><![CDATA[<img src="https://lh6.googleusercontent.com/_NtURUEgXcvirZB6RSVvB_IIzOlUvv1rEYZKwOuDkIkQ4KXB2x4ztjK36d2zU2oOoxwif5axqKlRxW1ohMS-IPFOpuYrTG1FUNoq9WfI9TqMyOaeAsVeue2Gknmfk4jFDSaB" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh6.googleusercontent.com/_NtURUEgXcvirZB6RSVvB_IIzOlUvv1rEYZKwOuDkIkQ4KXB2x4ztjK36d2zU2oOoxwif5axqKlRxW1ohMS-IPFOpuYrTG1FUNoq9WfI9TqMyOaeAsVeue2Gknmfk4jFDSaB</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1521468,-20.214107,0
+          </coordinates>
+        </Point>
+      </Placemark>
+      <Placemark>
+        <name>Plaza Prat Tarapaca</name>
+        <description><![CDATA[<img src="https://lh6.googleusercontent.com/Flcu5bap9CpabAQ92SHqYwPyz93LLiCZP2QdJgAmGwDEgO3Fv8ImixYJFeMGYqPuuYAOs_G7ON_GZn1TFb5tjmkdBlrpWn5ZYtNZTgBFunYtVUyTAAPMkC78K515xHQRL2D83A" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh6.googleusercontent.com/Flcu5bap9CpabAQ92SHqYwPyz93LLiCZP2QdJgAmGwDEgO3Fv8ImixYJFeMGYqPuuYAOs_G7ON_GZn1TFb5tjmkdBlrpWn5ZYtNZTgBFunYtVUyTAAPMkC78K515xHQRL2D83A</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1522032,-20.2139535,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>1901-1950</name>
+      <Placemark>
+        <name>Plaza Prat 1903</name>
+        <description><![CDATA[<img src="https://lh5.googleusercontent.com/bdbwtmgpMpidMWenuhEJT0fhUKOeebSRpl4wgCO1Gt_McDVJk4Sx13A4doLHJscIWQlsR6Mf9JjHRU8M5xm-h_IrgNpJouzsCIve8k1NgHcBYwLa43MknK4-Js1tgT7WVmA-CQ" height="200" width="auto" /><br><br>]]></description>
+        <styleUrl>#icon-1899-0288D1</styleUrl>
+        <ExtendedData>
+          <Data name="gx_media_links">
+            <value>https://lh5.googleusercontent.com/bdbwtmgpMpidMWenuhEJT0fhUKOeebSRpl4wgCO1Gt_McDVJk4Sx13A4doLHJscIWQlsR6Mf9JjHRU8M5xm-h_IrgNpJouzsCIve8k1NgHcBYwLa43MknK4-Js1tgT7WVmA-CQ</value>
+          </Data>
+        </ExtendedData>
+        <Point>
+          <coordinates>
+            -70.1521575,-20.2137195,0
+          </coordinates>
+        </Point>
+      </Placemark>
+    </Folder>
+    <Folder>
+      <name>1951-2000</name>
+    </Folder>
+  </Document>
+</kml>

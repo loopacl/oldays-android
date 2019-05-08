@@ -28,7 +28,11 @@ import org.osmdroid.bonuspack.kml.KmlDocument
 import org.osmdroid.bonuspack.kml.KmlFeature
 import com.google.android.gms.maps.MapsInitializer
 import com.google.android.gms.maps.GoogleMap
-
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.Marker
+import org.json.JSONObject
+import org.osmdroid.bonuspack.kml.KmlFolder
+import org.osmdroid.bonuspack.kml.KmlPlacemark
 
 
 //import android.R
@@ -49,6 +53,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ): View? {
 /*
         try {
@@ -87,10 +92,15 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
 
-        //cargaKML()
+        cargaKML()
     }
 
-/*
+    // https://github.com/googlemaps/android-maps-utils/blob/master/demo/src/com/google/maps/android/utils/demo/BaseDemoActivity.java
+    private fun getMap(): GoogleMap {
+        return this.mMap
+    }
+
+
     fun cargaKML() {
 
         if (estaConectado()) {
@@ -114,59 +124,40 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
             }
 
             if (ok) {
-                Log.d("Conectado", "OK")
+                Log.d("Descargado", "OK")
 
                 if (kmlDocument.mKmlRoot != null) {
-                    val capas = kmlDocument.mKmlRoot.mItems
+                    //if (kmlDocument.mKmlRoot.mItems.size > 0) {
 
-                    for (capa : KmlFeature in capas) {
+                        for (capa in kmlDocument.mKmlRoot.mItems) {
 
-                        Log.d("kML", "es Folder: "+capa.mName)
+                            Log.d("kML", "Capa: " + capa.mName)
 
-                        //val folder = capa.getBoundingBox()
-                        //val extendedData = capa.extendedDataAsText
-                        //.hasGeometry(KmlPlacemark).toString()
+                            val lugares = capa as KmlFolder
 
-                        //for (entry : KmlPlacemark in extendedData) {
+                            //if (lugares.mItems.size > 0) {
+                                Log.d("kML", "Tiene " + lugares.mItems.size + " lugares ")
 
-                        //Log.d("kML", "es lugar "+folder.)
+                                for (lug: KmlFeature in lugares.mItems) {
 
-//                    }
+                                    val punto = lug as KmlPlacemark
 
-                        //Log.d("Nancy", "es lugares: "+extendedData)
+                                    Log.d("kML", "Punto: "+punto.mName)
 
+                                    val marker: Marker = getMap().addMarker(
+                                        MarkerOptions()
+                                            .position(LatLng(punto.mGeometry.boundingBox.centerLatitude, punto.mGeometry.boundingBox.centerLongitude))
+                                            .title(punto.mName)
+                                            .snippet(punto.getExtendedData("description")))
 
-/*
-                    for (entry : org.osmdroid.bonuspack.kml.KmlFolder in capa) {
-                        /*String name = entry.getKey();
-                        String value = entry.getValue();
-                        result.append(name+"="+value+"<br>\n");
-                    }
-*/
+                                }
 
-                    for(lugar : KmlMultiGeometry in capa as KmlMultiGeometry){
+                            //}
+                        }
 
-            //TODO: if (lugar.hasGeometry(KmlPoint.class)) {
-
-            //val placemark = lugar// as KmlPlacemark
-
-            //placemark.length
-            /*
-                        val punto: GeoPoint = lugar.mGeometry.mCoordinates[0]
-
-                        mMap.addMarker(MarkerOptions()
-                                .position(LatLng(punto.latitude, punto.longitude))
-                                .title(lugar.mName)
-                                .snippet(lugar.mDescription)
-                                //.icon(BitmapDescriptorFactory.fromResource(R.raw.ic_))
-                        )
-                }*/
-
-            */
-                    }
-
-
+                    //}
                 }
+
 
             } else{
                 Toast.makeText(activity!!.applicationContext, "Error when loading KML", Toast.LENGTH_SHORT).show();
@@ -178,10 +169,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         }
 
     }
-*/
+
 
     /* DETECTAR SI HAY CONEXION */
-    fun estaConectado(): Boolean {
+    private fun estaConectado(): Boolean {
 
         // from fragment Context needs getActivity()?.
         // @Zoran https://stackoverflow.com/a/24427450/3369131
@@ -201,7 +192,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     // Función tipo de conexión para SDK28 (Android P) by @user1032613 https://stackoverflow.com/a/53243938/3369131
     // @IntRange(from = 0, to = 2)
-    fun getConnectionType(context: Context): Int {
+    private fun getConnectionType(context: Context): Int {
         var result = 0 // Returns connection type. 0: none; 1: mobile data; 2: wifi
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
