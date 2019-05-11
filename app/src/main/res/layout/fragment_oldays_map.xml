@@ -5,16 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".OldaysMapFragment">
 
-    <fragment xmlns:map="http://schemas.android.com/apk/res-auto"
+    <!-- MAP with AndroidX
+    whatever you put here gets replaced by a new map instance of SupportMapFragment
+     class="com.google.android.gms.maps.MapFragment"
+     android:name="com.google.android.gms.maps.MapFragment" -->
+    <fragment
+        class="com.google.android.gms.maps.MapFragment"
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        map:cameraZoom="13"
-        map:cameraTargetLat="-20.2304908"
-        map:cameraTargetLng="-70.1398506"
-        map:uiZoomControls="true"
-        map:uiZoomGestures="true"
         tools:context="cl.loopa.android.oldays.OldaysMapFragment"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        />
 
 </FrameLayout>

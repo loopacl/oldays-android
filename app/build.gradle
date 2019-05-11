@@ -49,6 +49,7 @@ dependencies {
     // https://developer.android.com/jetpack/androidx/releases/navigation#declaring_dependencies
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+    //implementation "androidx.navigations.safeargs.kotlin"
     //
     implementation 'com.google.android.gms:play-services-maps:9.2.1'
 
