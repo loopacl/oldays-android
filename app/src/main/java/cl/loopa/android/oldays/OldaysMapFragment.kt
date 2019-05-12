@@ -33,12 +33,16 @@ import org.osmdroid.bonuspack.kml.KmlPlacemark
 
 //import android.R
 
+import cl.loopa.android.oldays.PopupPinOldaysMapAdapter
+
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
 
     var capas = ArrayList<KmlFeature>()
+
+    private var popup: View? = null
 
     /*companion object {
         fun newInstance() = OldaysMapFragment()
@@ -58,6 +62,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     ): View? {
 
+        //  I don't remember how this code got here and what it does
         try {
             MapsInitializer.initialize(activity!!.applicationContext)
         } catch (e: Exception) {
@@ -70,13 +75,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         // Androix dropped support libraries... support
         // @ssantos https://stackoverflow.com/a/18963246/3369131
         // MapFragment requires the native API Level 11 @CommonsWare https://stackoverflow.com/a/15407738/3369131
-        var mapFragment : SupportMapFragment = SupportMapFragment.newInstance()
-        //mapFragment = childFragmentManager!!.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment : SupportMapFragment = SupportMapFragment.newInstance()
+        //val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         childFragmentManager.beginTransaction().replace(R.id.map, mapFragment).commit()
         mapFragment.getMapAsync(this)
-
-        //getMap().setInfoWindowAdapter(PopupPinOldaysMapAdapter(inflater))
-
 
         return inflater.inflate(R.layout.fragment_oldays_map, container, false)
 
@@ -114,8 +116,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,15f))
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
-        mMap.uiSettings.isZoomControlsEnabled = true
+        //mMap.uiSettings.isZoomControlsEnabled = true
         //mMap.isMyLocationEnabled = true
+
+        mMap.uiSettings.setMapToolbarEnabled(true)
 
         ponePins(capas)
 
@@ -159,11 +163,19 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
                         .title(punto.mName)
                         .snippet(stripHtml(punto.mDescription))
                 )
+
+
+                //TODO: Abrir detalle al hacer click en infoWindow http://www.androidcurso.com/index.php/493
             }
 
             }
 
         //}
+
+        val popup = object : PopupPinOldaysMapAdapter(){
+            override val inflater: LayoutInflater? = layoutInflater
+        }
+        getMap().setInfoWindowAdapter(popup)
     }
 
 

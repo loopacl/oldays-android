@@ -11,6 +11,14 @@
         android:name="cl.loopa.android.oldays.OldaysMapFragment"
         android:label="@string/title_fragment_oldays_map"
         tools:layout="@layout/fragment_oldays_map" >
+        <action
+            android:id="@+id/action_defaultFragment_to_oldaysMapDetailFragment"
+            app:destination="@id/oldaysMapDetailFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/oldaysMapDetailFragment"
+        android:name="cl.loopa.android.oldays.OldaysMapDetailFragment"
+        android:label="fragment_oldays_map_detail"
+        tools:layout="@layout/fragment_oldays_map_detail" />
 
 </navigation>

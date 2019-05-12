@@ -6,7 +6,7 @@
     tools:context=".OldaysMapFragment">
 
     <!-- MAP with AndroidX
-    whatever you put here gets replaced by a new map instance of SupportMapFragment
+    whatever you put here gets replaced by a new map instance of SupportMapFragment so don't bother
      class="com.google.android.gms.maps.MapFragment"
      android:name="com.google.android.gms.maps.MapFragment" -->
     <fragment
