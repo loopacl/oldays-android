@@ -21,7 +21,10 @@ import androidx.core.content.ContextCompat.getSystemService
 
 import android.net.NetworkInfo
 import android.text.Html
+import android.widget.FrameLayout
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.findNavController
 import com.google.android.gms.maps.*
 
 import org.osmdroid.bonuspack.kml.KmlFeature
@@ -34,21 +37,23 @@ import org.osmdroid.bonuspack.kml.KmlPlacemark
 //import android.R
 
 import cl.loopa.android.oldays.PopupPinOldaysMapAdapter
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_oldays_map.*
 
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
+    private lateinit var viewModel: OldaysMapViewModel
 
     var capas = ArrayList<KmlFeature>()
 
-    private var popup: View? = null
+    private lateinit var popup: View
 
     /*companion object {
         fun newInstance() = OldaysMapFragment()
     }*/
 
-    private lateinit var viewModel: OldaysMapViewModel
 
 
     /* onCreateView is called to inflate the layout of the fragment
@@ -62,7 +67,15 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     ): View? {
 
-        //  I don't remember how this code got here and what it does
+        viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
+
+        /* https://www.youtube.com/watch?time_continue=95&v=x9Z0TNdAJ60
+        val binding: FragmentTitleBinding = DataBindingUtil.inflate(
+            inflater,R.layout.
+        )*/
+
+
+        //  I don't remember how this code got here and what does it do
         try {
             MapsInitializer.initialize(activity!!.applicationContext)
         } catch (e: Exception) {
@@ -72,24 +85,64 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
         /* PONE EL MAPA */
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        // Androix dropped support libraries... support
+        // AndroiX dropped support libraries... support
         // @ssantos https://stackoverflow.com/a/18963246/3369131
-        // MapFragment requires the native API Level 11 @CommonsWare https://stackoverflow.com/a/15407738/3369131
+        // MapFragment requires the native API Level 11 @CommonsWare https://stackoverflow.com/a/15407738/
+        // https://developers.google.com/maps/documentation/android-api/map
         val mapFragment : SupportMapFragment = SupportMapFragment.newInstance()
         //val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        childFragmentManager.beginTransaction().replace(R.id.map, mapFragment).commit()
+        //@oscarr: It would be cool to put a Loading... fragment and replace it when we have the data
+        childFragmentManager.beginTransaction().replace(R.id.map, mapFragment).commitAllowingStateLoss()
         mapFragment.getMapAsync(this)
 
+        /*if(savedInstanceState != null) {
+            return super.onCreateView(inflater, container, savedInstanceState)
+            return inflater.inflate(R.layout.fragment_oldays_map, container, false)
+        } else{*/
         return inflater.inflate(R.layout.fragment_oldays_map, container, false)
+        //}*/
+
 
     }
+/*
+    override fun onDestroyView() {
+        super.onDestroyView()
+        try{
+        val mapFragment : SupportMapFragment? = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        if (mapFragment != null) {
+            childFragmentManager.beginTransaction().remove(mapFragment).commit()
+        }}
+        /*try {
+            val fragment : Fragment? = (childFragmentManager.findFragmentById(R.id.map))
+            val ft : FragmentTransaction = getActivity().getSupportFragmentManager()
+                .beginTransaction();
+            ft.remove(fragment);
+            ft.commit();
+        }*/ catch (e : Exception) {
+            e.printStackTrace()
+        }
+    }*/
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
+
+
+        button2.setOnClickListener{ nav_view ->
+
+            //abrirDetalle(view)
+            val navController = nav_view.findNavController()
+            navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
+            // https://codelabs.developers.google.com/codelabs/android-navigation/#4
+           // findNavController().navigate(R.id.oldaysMapDetailFragment)*/
+        }
 
 
         // TODO: Do it in a new thread and wait for results
+        // Understand Kotlin Coroutines on Android (Google I/O'19) https://www.youtube.com/watch?v=BOHK_w09pVA
+
         // http://www.sgoliver.net/blog/tareas-en-segundo-plano-en-android-i-thread-y-asynctask/
         //Thread(Runnable {
             //Aquí ejecutamos nuestras tareas costosas
@@ -97,7 +150,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
             if (estaConectado()) {
                 Log.d("Conectado", "SÍ")
 
-                capas = viewModel.cargaKML()
+                capas = viewModel.getKML()
 
             }
 
@@ -128,11 +181,6 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     }
 
-    // https://github.com/googlemaps/android-maps-utils/blob/master/demo/src/com/google/maps/android/utils/demo/BaseDemoActivity.java
-    private fun getMap(): GoogleMap {
-        return this.mMap
-    }
-
 
     fun ponePins(capas : ArrayList<KmlFeature>){
 
@@ -152,7 +200,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
                 Log.d("kML", "Punto: " + punto.mName)
 
-                val marker: Marker = getMap().addMarker(
+                val marker: Marker = mMap.addMarker(
                     MarkerOptions()
                         .position(
                             LatLng(
@@ -161,22 +209,33 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
                             )
                         )
                         .title(punto.mName)
-                        .snippet(stripHtml(punto.mDescription))
+                        //.snippet(stripHtml(punto.mDescription))
                 )
 
 
                 //TODO: Abrir detalle al hacer click en infoWindow http://www.androidcurso.com/index.php/493
+
             }
 
             }
 
         //}
 
+        // Instance abstract object https://kotlinlang.org/docs/reference/object-declarations.html
+        // Thanks, @Ronald Martin https://stackoverflow.com/a/34143646/3369131
         val popup = object : PopupPinOldaysMapAdapter(){
             override val inflater: LayoutInflater? = layoutInflater
         }
-        getMap().setInfoWindowAdapter(popup)
+        mMap.setInfoWindowAdapter(popup)
     }
+
+    // SafeArgs https://events.google.com/io/schedule/events/2d0cb491-325a-48fb-8eea-6a9452f3b33b
+    // https://developer.android.com/jetpack/androidx/releases/navigation
+    /*fun abrirDetalle(view: View){
+        val navController = view.findNavController()
+        navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
+    }*/
+
 
 
     /* DETECTAR SI HAY CONEXION */
@@ -226,13 +285,13 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         }
         return result
     }
-
+/*
     fun stripHtml(html: String): String {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
         } else {
            return Html.fromHtml(html).toString()
         }
-    }
+    }*/
 
 }

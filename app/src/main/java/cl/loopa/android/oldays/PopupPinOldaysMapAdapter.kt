@@ -43,6 +43,8 @@ abstract class PopupPinOldaysMapAdapter : GoogleMap.InfoWindowAdapter {
     public override fun getInfoWindow(m: Marker): View? {
         return null
     }*/
+    // open allows to modify from parent fragment
+    // @Willi Mentzel @Shriyansh Gautam https://stackoverflow.com/a/46399551/3369131
     open val inflater: LayoutInflater? = null
 
     /*init {
