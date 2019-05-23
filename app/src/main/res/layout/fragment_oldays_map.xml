@@ -3,23 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OldaysMapFragment"
-    android:id="@+id/map_container">
+    tools:context=".OldaysMapFragment">
 
     <!-- MAP with AndroidX
     whatever you put here gets replaced by a new map instance of SupportMapFragment so don't bother
-     class="com.google.android.gms.maps.MapFragment"
-     android:name="com.google.android.gms.maps.MapFragment"
-        tools:context="cl.loopa.android.oldays.OldaysMapFragment"
-     class="com.google.android.gms.maps.MapFragment"
---><!--
     <fragment
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-
+     class="com.google.android.gms.maps.MapFragment"
+     android:name="com.google.android.gms.maps.MapFragment"
+        tools:context="cl.loopa.android.oldays.OldaysMapFragment"
+     class="com.google.android.gms.maps.MapFragment"
         />-->
+    <FrameLayout
+        android:id="@+id/map_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!-- Splash: Loading... -->
+    </FrameLayout>
 
     <Button
         android:id="@+id/button2"

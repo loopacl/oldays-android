@@ -94,11 +94,11 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         //@oscarr: It would be cool to put a Loading... fragment and replace it when we have the data
 
         /*val mF = childFragmentManager.findFragmentByTag("map") as SupportMapFragment
-        if(mF!=null && mF.isAdded){
-            childFragmentManager.beginTransaction().replace(mF.id, mapFragment)/*.addToBackStack("map")*/.commitAllowingStateLoss()
-        }else{*/
+        if(mF!=null && mF.isAdded){*/
+            childFragmentManager.beginTransaction().replace(R.id.map_container, mapFragment)/*.addToBackStack("map")*/.commit/*AllowingStateLoss*/()
+        /*}else{
             childFragmentManager.beginTransaction().add(R.id.map_container, mapFragment,"map")/*.addToBackStack("map")*/.commitAllowingStateLoss()
-        /*}*/
+        }*/
         mapFragment.getMapAsync(this)
 
         return inflater.inflate(R.layout.fragment_oldays_map, container, false)
