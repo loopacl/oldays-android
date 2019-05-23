@@ -37,8 +37,10 @@ import org.osmdroid.bonuspack.kml.KmlPlacemark
 //import android.R
 
 import cl.loopa.android.oldays.PopupPinOldaysMapAdapter
+import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_oldays_map.*
+import kotlinx.android.synthetic.main.fragment_oldays_map.view.*
 
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback {
@@ -67,20 +69,18 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     ): View? {
 
-        viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
-
         /* https://www.youtube.com/watch?time_continue=95&v=x9Z0TNdAJ60
         val binding: FragmentTitleBinding = DataBindingUtil.inflate(
             inflater,R.layout.
         )*/
 
-
+/*
         //  I don't remember how this code got here and what does it do
         try {
             MapsInitializer.initialize(activity!!.applicationContext)
         } catch (e: Exception) {
             e.printStackTrace()
-        }
+        }*/
 
 
         /* PONE EL MAPA */
@@ -92,23 +92,22 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         val mapFragment : SupportMapFragment = SupportMapFragment.newInstance()
         //val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         //@oscarr: It would be cool to put a Loading... fragment and replace it when we have the data
-        childFragmentManager.beginTransaction().replace(R.id.map, mapFragment).commitAllowingStateLoss()
+
+        /*val mF = childFragmentManager.findFragmentByTag("map") as SupportMapFragment
+        if(mF!=null && mF.isAdded){
+            childFragmentManager.beginTransaction().replace(mF.id, mapFragment)/*.addToBackStack("map")*/.commitAllowingStateLoss()
+        }else{*/
+            childFragmentManager.beginTransaction().add(R.id.map_container, mapFragment,"map")/*.addToBackStack("map")*/.commitAllowingStateLoss()
+        /*}*/
         mapFragment.getMapAsync(this)
 
-        /*if(savedInstanceState != null) {
-            return super.onCreateView(inflater, container, savedInstanceState)
-            return inflater.inflate(R.layout.fragment_oldays_map, container, false)
-        } else{*/
         return inflater.inflate(R.layout.fragment_oldays_map, container, false)
-        //}*/
-
 
     }
 /*
     override fun onDestroyView() {
-        super.onDestroyView()
         try{
-        val mapFragment : SupportMapFragment? = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        val mapFragment = childFragmentManager.findFragmentByTag("map") as SupportMapFragment
         if (mapFragment != null) {
             childFragmentManager.beginTransaction().remove(mapFragment).commit()
         }}
@@ -121,22 +120,19 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         }*/ catch (e : Exception) {
             e.printStackTrace()
         }
+
+        super.onDestroyView()
     }*/
 
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
 
 
         button2.setOnClickListener{ nav_view ->
-
-            //abrirDetalle(view)
-            val navController = nav_view.findNavController()
-            navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
-            // https://codelabs.developers.google.com/codelabs/android-navigation/#4
-           // findNavController().navigate(R.id.oldaysMapDetailFragment)*/
+            abrirDetalle(nav_view)
         }
 
 
@@ -164,12 +160,14 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
         Log.d("Mapa", "Listo")
 
+        button2.bringToFront()
+
         // Add a marker in Sydney and move the camera
         val iquique = LatLng(-20.215120, -70.152103)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,15f))
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
-        //mMap.uiSettings.isZoomControlsEnabled = true
+        mMap.uiSettings.isZoomControlsEnabled()
         //mMap.isMyLocationEnabled = true
 
         mMap.uiSettings.setMapToolbarEnabled(true)
@@ -231,10 +229,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
     // SafeArgs https://events.google.com/io/schedule/events/2d0cb491-325a-48fb-8eea-6a9452f3b33b
     // https://developer.android.com/jetpack/androidx/releases/navigation
-    /*fun abrirDetalle(view: View){
+    private fun abrirDetalle(view: View) {
         val navController = view.findNavController()
         navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
-    }*/
+    }
 
 
 

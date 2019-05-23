@@ -10,7 +10,7 @@ android {
     compileSdkVersion 'android-Q'
     defaultConfig {
         applicationId "cl.loopa.android.oldays"
-        minSdkVersion 16 //osmbonuspack pide 16, la versión anterior pedía 14. Google Maps SDK v3 pide API16
+        minSdkVersion 14 //osmbonuspack pide 16, la versión anterior pedía 14. Google Maps SDK v3 pide API16
         targetSdkVersion 28
         versionCode 1
         versionName "0.5"
@@ -23,8 +23,8 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    buildToolsVersion '29.0.0 rc3'/*
-    compileOptions {
+    buildToolsVersion '29.0.0 rc3'
+    /*compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
     }*/
@@ -61,12 +61,12 @@ dependencies {
     // en 9.2.1 aparecieron los estilos para ocultar los POI
     // en 16 arreglaron incompatibilidad con Android X
     // TODO: Remove Google Maps dependency
-    implementation 'com.google.android.gms:play-services-maps:16.0.0'
+    implementation 'com.google.android.gms:play-services-maps:9.2.1'
 
     // OSMBonusPack
     // https://github.com/MKergall/osmbonuspack/wiki/HowToInclude
-    // La versión osmbonuspack:6.5.3 pide API 16, 6.5.2 pide API14
-    implementation 'com.github.MKergall:osmbonuspack:6.6.0'
+    // La versión osmbonuspack:6.5.3 pide API16, 6.5.2 pide API14, ultima 6.6.0
+    implementation 'com.github.MKergall:osmbonuspack:6.5.2'
 
     testImplementation 'junit:junit:4.13-beta-3'
     androidTestImplementation 'androidx.test:runner:1.2.0-beta01'
