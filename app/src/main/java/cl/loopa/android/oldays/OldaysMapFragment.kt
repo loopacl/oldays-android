@@ -25,30 +25,31 @@ import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
-import com.google.android.gms.maps.*
 
 import org.osmdroid.bonuspack.kml.KmlFeature
-import com.google.android.gms.maps.MapsInitializer
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.model.Marker
 import org.osmdroid.bonuspack.kml.KmlFolder
 import org.osmdroid.bonuspack.kml.KmlPlacemark
 
 //import android.R
 
 import cl.loopa.android.oldays.PopupPinOldaysMapAdapter
+import com.google.android.gms.maps.*
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_oldays_map.*
 import kotlinx.android.synthetic.main.fragment_oldays_map.view.*
 
 
-class OldaysMapFragment : Fragment(), OnMapReadyCallback {
+class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var viewModel: OldaysMapViewModel
 
     var capas = ArrayList<KmlFeature>()
+    var places = ArrayList<KmlPlacemark>()
 
     private lateinit var popup: View
 
@@ -130,10 +131,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
 
-
+/*
         button2.setOnClickListener{ nav_view ->
             abrirDetalle(nav_view)
-        }
+        }*/
 
 
         // TODO: Do it in a new thread and wait for results
@@ -160,11 +161,9 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
 
         Log.d("Mapa", "Listo")
 
-        button2.bringToFront()
-
         // Add a marker in Sydney and move the camera
         val iquique = LatLng(-20.215120, -70.152103)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,15f))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,16f))
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
         mMap.uiSettings.isZoomControlsEnabled()
@@ -175,13 +174,12 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         ponePins(capas)
 
         //https://pastebin.com/6UNWrrW2
-        //getMap().setOnInfoWindowClickListener(this)
+        mMap.setOnInfoWindowClickListener(this)
 
     }
 
 
     fun ponePins(capas : ArrayList<KmlFeature>){
-
 
         for (capa in capas) {
 
@@ -210,8 +208,8 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
                         //.snippet(stripHtml(punto.mDescription))
                 )
 
+                places.add(punto)
 
-                //TODO: Abrir detalle al hacer click en infoWindow http://www.androidcurso.com/index.php/493
 
             }
 
@@ -227,13 +225,38 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback {
         mMap.setInfoWindowAdapter(popup)
     }
 
-    // SafeArgs https://events.google.com/io/schedule/events/2d0cb491-325a-48fb-8eea-6a9452f3b33b
-    // https://developer.android.com/jetpack/androidx/releases/navigation
-    private fun abrirDetalle(view: View) {
-        val navController = view.findNavController()
-        navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
+
+    // Abrir detalle al hacer click en infoWindow
+    // https://developers.google.com/maps/documentation/android-sdk/marker#associate_data_with_a_marker
+    override fun onInfoWindowClick(marker: Marker) {
+
+        Log.d("Marcador", marker.id)
+        Log.d("Largo places",places.size.toString())
+
+        loop@ for (indice in places.indices) {
+
+            Log.d("Marcador", marker.id.substring(1))
+            Log.d("Place",indice.toString())
+
+            //Buscar el clickeado (marker.id asignado es m<ìndice>, quitamos la m inicial y comparamos <indice>s
+            if (indice.toString()==marker.id.substring(1)) {
+
+                Log.d("Encontrado","YEAH")
+
+                val navController = view?.findNavController()
+                navController?.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
+
+                break@loop
+            }
+        }
     }
 
+    // SafeArgs https://events.google.com/io/schedule/events/2d0cb491-325a-48fb-8eea-6a9452f3b33b
+    // https://developer.android.com/jetpack/androidx/releases/navigation
+    /*private fun abrirDetalle(view: View) {
+        val navController = view.findNavController()
+        navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
+    }*/
 
 
     /* DETECTAR SI HAY CONEXION */
