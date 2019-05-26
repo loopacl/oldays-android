@@ -129,7 +129,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
+
 
 /*
         button2.setOnClickListener{ nav_view ->
@@ -144,12 +144,8 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         //Thread(Runnable {
             //Aquí ejecutamos nuestras tareas costosas
 
-            if (estaConectado()) {
-                Log.d("Conectado", "SÍ")
 
-                capas = viewModel.getKML()
 
-            }
 
         //}).start()
 
@@ -170,6 +166,17 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         //mMap.isMyLocationEnabled = true
 
         mMap.uiSettings.setMapToolbarEnabled(true)
+
+
+
+
+        if (estaConectado()) {
+            Log.d("Conectado", "SÍ")
+
+            viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
+            capas = viewModel.getKML()
+
+        }
 
         ponePins(capas)
 
@@ -238,13 +245,15 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
             Log.d("Marcador", marker.id.substring(1))
             Log.d("Place",indice.toString())
 
-            //Buscar el clickeado (marker.id asignado es m<ìndice>, quitamos la m inicial y comparamos <indice>s
+            //Buscar el clickeado (marker.id asignado es m<ìndice>, quitamos el 1er caracter m y comparamos
             if (indice.toString()==marker.id.substring(1)) {
 
                 Log.d("Encontrado","YEAH")
 
+                val action = OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment(places[indice])
+
                 val navController = view?.findNavController()
-                navController?.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
+                navController?.navigate(action)
 
                 break@loop
             }

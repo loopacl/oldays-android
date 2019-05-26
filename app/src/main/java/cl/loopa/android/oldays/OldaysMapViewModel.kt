@@ -17,6 +17,8 @@ class OldaysMapViewModel : ViewModel() {
         kml = cargaKML()
     }
 
+
+
     fun getKML() : ArrayList<KmlFeature>{
         return kml
     }
@@ -52,10 +54,10 @@ class OldaysMapViewModel : ViewModel() {
                     //}
                 }
 
-            } else{
-                // Toast.makeText(activity!!.applicationContext, "Error when loading KML", Toast.LENGTH_SHORT).show();
+            }/* else{
+                Toast.makeText(activity!!.applicationContext, "Error when loading KML", Toast.LENGTH_SHORT).show();
 
-            }
+            }*/
 
         return ArrayList<KmlFeature>()
     }
