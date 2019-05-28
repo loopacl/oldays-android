@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.activity_main.*
 
 /*
 // TODO: Rename parameter arguments, choose names that match
@@ -51,6 +52,10 @@ class OldaysMapDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+
+        activity?.setTitle("Your Title")
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_oldays_map_detail, container, false)
     }
@@ -64,12 +69,20 @@ class OldaysMapDetailFragment : Fragment() {
         /*Navigation.findNavController(view)
             .getCurrentDestination()?.setLabel(name*/
 
+        activity?.setTitle("Your Title")
+
         val titulo: TextView = getView()!!.findViewById(R.id.titulo) as TextView
         titulo.text = args.placemark?.mName.toString()
 
         val descripcion: TextView = getView()!!.findViewById(R.id.descripcion) as TextView
         descripcion.text = stripHtml(args.placemark?.mDescription.toString())
 
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        activity?.toolbar?.title = args.placemark?.mName
     }
 
     fun stripHtml(html: String): String {

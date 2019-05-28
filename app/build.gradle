@@ -58,14 +58,15 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Teléfonos usados no tienen última versión,
-    // en 9.2.1 aparecieron los estilos para ocultar los POI
+    // emulador <API19 tienen Google Play Services 9.2
+    // en 9.6 aparecieron los estilos para ocultar los POI
     // en 16 arreglaron incompatibilidad con Android X
     // TODO: Remove Google Maps dependency
-    implementation 'com.google.android.gms:play-services-maps:9.2.1'
+    implementation 'com.google.android.gms:play-services-maps:9.6.1'
 
     // OSMBonusPack
     // https://github.com/MKergall/osmbonuspack/wiki/HowToInclude
-    // La versión osmbonuspack:6.5.3 pide API16, 6.5.2 pide API14, ultima 6.6.0
+    // La versión osmbonuspack:6.5.3 pide API16, 6.5.2 pide API14, última es 6.6.0
     implementation 'com.github.MKergall:osmbonuspack:6.5.2'
 
     testImplementation 'junit:junit:4.13-beta-3'

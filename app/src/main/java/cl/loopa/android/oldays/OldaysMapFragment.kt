@@ -1,8 +1,10 @@
 package cl.loopa.android.oldays
 
 import android.Manifest
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -37,6 +39,8 @@ import cl.loopa.android.oldays.PopupPinOldaysMapAdapter
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+
+import com.google.android.gms.maps.model.MapStyleOptions
 import kotlinx.android.synthetic.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_oldays_map.*
@@ -157,7 +161,34 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
         Log.d("Mapa", "Listo")
 
-        // Add a marker in Sydney and move the camera
+        //Quita botones
+        //mMap.getUiSettings().setMapToolbarEnabled(false)
+
+        //Adding a styled map
+        //https://developers.google.com/maps/documentation/android-sdk/styling
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            val success : Boolean = mMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    context, R.raw.map_style_oldays))
+
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (e : Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
+
+
+
+
+        //Quita puntos de interés de Google Maps https://developers.google.com/maps/documentation/android-api/hiding-features
+
+
+        //mMap.setPadding(toolbar.height, 0, 0, 0)
+
+        //Move the camera
         val iquique = LatLng(-20.215120, -70.152103)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,16f))
 
@@ -250,15 +281,17 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
                 Log.d("Encontrado","YEAH")
 
-                val action = OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment(places[indice])
+                val action = OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment(places[indice],places[indice].mName)
 
                 val navController = view?.findNavController()
+
                 navController?.navigate(action)
 
                 break@loop
             }
         }
     }
+
 
     // SafeArgs https://events.google.com/io/schedule/events/2d0cb491-325a-48fb-8eea-6a9452f3b33b
     // https://developer.android.com/jetpack/androidx/releases/navigation
