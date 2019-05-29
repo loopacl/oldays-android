@@ -14,7 +14,7 @@
             android:id="@+id/imageView3"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            android:background="#3F51B5"
+            android:background="#ae9e90"
             android:contentDescription="Foto"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

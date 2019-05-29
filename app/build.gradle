@@ -58,7 +58,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     // Teléfonos usados no tienen última versión,
-    // emulador <API19 tienen Google Play Services 9.2
+    // Mínimo debiese ser 9.2.1. Emuladores < API19 tienen Google Play Services 9.2
     // en 9.6 aparecieron los estilos para ocultar los POI
     // en 16 arreglaron incompatibilidad con Android X
     // TODO: Remove Google Maps dependency

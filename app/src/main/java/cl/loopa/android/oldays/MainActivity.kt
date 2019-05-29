@@ -42,9 +42,10 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)/*, NavigationView
         //setupNavigation()
 
         /* Android Jetpack Navigation dejó demás este código */
-        /*val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
+        //val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
-
+        NavigationUI.setupWithNavController(navView, navController)
+/*
         val toggle = ActionBarDrawerToggle(
             this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
         )
@@ -53,11 +54,11 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)/*, NavigationView
 
         navView.setNavigationItemSelectedListener(this)*/
 
-
         // Jetpack Navigation (Google I/O'19) https://youtu.be/JFGq0asqSuA?t=300
         val appBarConfiguration = AppBarConfiguration(
             setOf(R.id.defaultFragment,R.id.aboutFragment/*,R.id.oldaysMapDetailFragment*/),
             findViewById<DrawerLayout>(R.id.drawer_layout))
+
         findViewById<Toolbar>(R.id.toolbar)
             .setupWithNavController(navController,appBarConfiguration)
 

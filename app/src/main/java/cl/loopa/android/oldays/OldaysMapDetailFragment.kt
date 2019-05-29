@@ -4,15 +4,21 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.text.TextUtils.replace
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.text.HtmlCompat.fromHtml
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.Collections.replaceAll
+import java.util.Collections.replaceAll
+
+
 
 /*
 // TODO: Rename parameter arguments, choose names that match
@@ -85,11 +91,16 @@ class OldaysMapDetailFragment : Fragment() {
         activity?.toolbar?.title = args.placemark?.mName
     }
 
-    fun stripHtml(html: String): String {
+    fun stripHtml(htmls: String): String {
+
+         val txt : String = Html.fromHtml(htmls.replace("<img.+?>", "")).toString()
+
+
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
+            return txt
         } else {
-            return Html.fromHtml(html).toString()
+            return txt
         }
     }
 

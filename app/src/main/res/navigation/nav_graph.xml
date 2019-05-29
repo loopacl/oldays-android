@@ -20,23 +20,18 @@
     <fragment
         android:id="@+id/aboutFragment"
         android:name="cl.loopa.android.oldays.AboutFragment"
-        android:label="fragment_about"
+        android:label="@string/about"
         tools:layout="@layout/fragment_about" />
     <fragment
         android:id="@+id/oldaysMapDetailFragment"
         android:name="cl.loopa.android.oldays.OldaysMapDetailFragment"
-        android:label="Olday"
+        android:label="Oldays"
         tools:layout="@layout/fragment_oldays_map_detail" >
         <argument
             android:name="placemark"
             app:argType="org.osmdroid.bonuspack.kml.KmlPlacemark"
             app:nullable="true"
             android:defaultValue="@null" />
-        <argument
-            android:name="title"
-            app:argType="string"
-            app:nullable="true"
-            android:defaultValue="Oldays" />
     </fragment>
 
 </navigation>

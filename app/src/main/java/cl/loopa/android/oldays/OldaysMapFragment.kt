@@ -55,7 +55,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
     var capas = ArrayList<KmlFeature>()
     var places = ArrayList<KmlPlacemark>()
 
-    private lateinit var popup: View
+    //private lateinit var popup: View
 
     /*companion object {
         fun newInstance() = OldaysMapFragment()
@@ -130,15 +130,9 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
     }*/
 
 
-
+/*
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-/*
-        button2.setOnClickListener{ nav_view ->
-            abrirDetalle(nav_view)
-        }*/
 
 
         // TODO: Do it in a new thread and wait for results
@@ -149,11 +143,9 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
             //Aquí ejecutamos nuestras tareas costosas
 
 
-
-
         //}).start()
 
-    }
+    }*/
 
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -164,8 +156,11 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         //Quita botones
         //mMap.getUiSettings().setMapToolbarEnabled(false)
 
+        //TODO: Verify Google Play Services version, maybe
+
         //Adding a styled map
         //https://developers.google.com/maps/documentation/android-sdk/styling
+        //https://developers.google.com/maps/documentation/android-api/hiding-features
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
@@ -174,17 +169,11 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
                     context, R.raw.map_style_oldays))
 
             if (!success) {
-                Log.e(TAG, "Style parsing failed.");
+                Log.e(TAG, "Style parsing failed.")
             }
         } catch (e : Resources.NotFoundException) {
-            Log.e(TAG, "Can't find style. Error: ", e);
+            Log.e(TAG, "Can't find style. Error: ", e)
         }
-
-
-
-
-        //Quita puntos de interés de Google Maps https://developers.google.com/maps/documentation/android-api/hiding-features
-
 
         //mMap.setPadding(toolbar.height, 0, 0, 0)
 
@@ -281,7 +270,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
                 Log.d("Encontrado","YEAH")
 
-                val action = OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment(places[indice],places[indice].mName)
+                val action = OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment(places[indice])
 
                 val navController = view?.findNavController()
 
