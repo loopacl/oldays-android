@@ -8,9 +8,11 @@ import androidx.lifecycle.ViewModel;
 import org.osmdroid.bonuspack.kml.KmlDocument
 import org.osmdroid.bonuspack.kml.KmlFeature
 
+//TODO: Code it in a more recommended way. Google I/O '18 https://www.youtube.com/watch?v=WVPH48lUzGY
+
 class OldaysMapViewModel : ViewModel() {
 
-    private lateinit var kml : ArrayList<KmlFeature>
+    private var kml : ArrayList<KmlFeature>
 
     init {
 
