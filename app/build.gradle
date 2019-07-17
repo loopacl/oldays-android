@@ -14,7 +14,7 @@ android {
         targetSdkVersion 29
         //multiDexEnabled true //https://developer.android.com/studio/build/multidex
         versionCode 2
-        versionName "0.2"
+        versionName "0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -36,6 +36,7 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    //Android Core has HtmlCompat @Sagar Balyan https://stackoverflow.com/a/37905107/3369131
     implementation 'androidx.core:core-ktx:1.2.0-alpha02'
     //implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'

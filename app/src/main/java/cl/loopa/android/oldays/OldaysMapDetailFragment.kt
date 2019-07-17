@@ -4,12 +4,16 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextUtils.replace
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_oldays_map_detail.*
@@ -82,17 +86,26 @@ class OldaysMapDetailFragment : Fragment() {
         activity?.toolbar?.title = args.placemark?.mName
     }
 
-    fun stripHtml(htmls: String): String {
+    fun stripHtml(htmls: String): Spanned {
 
-         val txt : String = Html.fromHtml(htmls.replace("<img.+?>", "")).toString()
+        Log.d("Antes", htmls)
+        var rgx = "<img.*?./>".toRegex()
+        // on API 24 and newer, otherwise flags are ignored and Html.fromHtml(String) is used
+        // https://developer.android.com/reference/androidx/core/text/HtmlCompat.html
+        // @Rockney https://stackoverflow.com/a/37905107/3369131
+        val htmlr = rgx.replace(htmls, "")
+        Log.d("Después",htmlr)
+        var txt : Spanned
 
-
-
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            return txt
+/*
+        if (htmls == null) {
+            txt = SpannableString("")
+        } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {*/
+            txt = HtmlCompat.fromHtml(htmlr, HtmlCompat.FROM_HTML_MODE_LEGACY)/*
         } else {
-            return txt
-        }
+            txt = Html.fromHtml(html)
+        }*/
+        return txt
     }
 
     // TODO: Rename method, update argument and hook method into UI event
