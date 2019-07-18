@@ -65,12 +65,13 @@ class OldaysMapDetailFragment : Fragment() {
         descripcion.text = stripHtml(args.placemark?.mDescription.toString())
 
         // Google Maps KML put the list of images space separated urls in a <ExtendedData><Data name="gx_media_links">
-        val urls = args.placemark?.getExtendedData("gx_media_links")!!.split(" ")
+        val urls = args.placemark?.getExtendedData("gx_media_links")?.split(" ")
         Log.d("kML", "URLS: " + urls)
 
-        val adapter=MapDetailSliderAdapter(context,urls)
-        slider.adapter = adapter
-
+        if(urls!=null && urls.isNotEmpty()) {
+            val adapter = MapDetailSliderAdapter(context, urls)
+            slider.adapter = adapter
+        }
     }
 
 

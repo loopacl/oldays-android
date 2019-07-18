@@ -17,7 +17,7 @@ android {
         targetSdkVersion 29
         //multiDexEnabled true //https://developer.android.com/studio/build/multidex
         versionCode 2
-        versionName "0.3"
+        versionName "0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }

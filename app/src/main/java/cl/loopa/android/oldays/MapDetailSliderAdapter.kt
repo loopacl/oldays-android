@@ -14,39 +14,43 @@ import com.bumptech.glide.Glide
 * https://www.youtube.com/watch?v=rkABx5gh_rY
 * */
 
-class MapDetailSliderAdapter(private val context: Context? , private val urls:List<String>): PagerAdapter(){
+class MapDetailSliderAdapter(private val context: Context? , private val urls:List<String>?): PagerAdapter(){
 
     private var layoutInflater:LayoutInflater?=null
-    private val images=arrayOf(R.drawable.ic_launcher_foreground)
-    /*val urls = arrayOf(
-        "https://lh6.googleusercontent.com/_NtURUEgXcvirZB6RSVvB_IIzOlUvv1rEYZKwOuDkIkQ4KXB2x4ztjK36d2zU2oOoxwif5axqKlRxW1ohMS-IPFOpuYrTG1FUNoq9WfI9TqMyOaeAsVeue2Gknmfk4jFDSaB",
-        "https://lh4.googleusercontent.com/COiqaR10oAYdNBOUjHPdt_MytWSgWkqIH-_sUEIDfI09z3hzwL30LgUiaq8uGHeDxgHcP-ECLOZcIsuJYmRqerzo8tig2GvxhGeQeYyjsPX0-N_Fcr9jtULPFr0iDsW16ERYDQ")
-*/
+
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
         return view === `object`
     }
 
     override fun getCount(): Int {
-        return urls.size
+        var size:Int=0
+        if(urls!=null){
+            size=urls.size
+        }
+        return size
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         layoutInflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val v = layoutInflater!!.inflate(R.layout.map_detail_slider_item,null)
 
-
         val image = v.findViewById<View>(R.id.sliderItem) as ImageView
 
-        Glide.with(container)
-            // googleusercontent.com allows image sizing
-            // https://developers.google.com/people/image-sizing
-            .load(urls[position]+"=w480")
-            .centerCrop()
-            .into(image)
+        if(urls!=null && urls.isNotEmpty()){
 
-        //image.setImageResource(images[position])
-        val vp = container as ViewPager
-        vp.addView(v,0)
+            Glide.with(container)
+                // googleusercontent.com allows image sizing
+                // https://developers.google.com/people/image-sizing
+                .load(urls[position]+"=w480")
+                .centerCrop()
+                .into(image)
+
+            val vp = container as ViewPager
+            vp.addView(v,0)
+        }/* else{
+            image.setImageDrawable()
+        }*/
+
         return v
     }
 
