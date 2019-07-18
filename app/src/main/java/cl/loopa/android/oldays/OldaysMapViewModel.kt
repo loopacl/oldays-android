@@ -27,7 +27,6 @@ class OldaysMapViewModel : ViewModel() {
 
     fun cargaKML() : ArrayList<KmlFeature>{
 
-
         val urlString = "http://www.google.com/maps/d/kml?forcekml=1&mid=1X17DMfvcAVNH0qbrX-jJqSDDoAsHQYf6"
 
         val kmlDocument = KmlDocument()

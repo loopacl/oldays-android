@@ -45,9 +45,6 @@ class OldaysMapDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
-
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_oldays_map_detail, container, false)
     }
@@ -67,7 +64,11 @@ class OldaysMapDetailFragment : Fragment() {
         val descripcion: TextView = getView()!!.findViewById(R.id.descripcion) as TextView
         descripcion.text = stripHtml(args.placemark?.mDescription.toString())
 
-        val adapter=MapDetailSliderAdapter(context)
+        // Google Maps KML put the list of images space separated urls in a <ExtendedData><Data name="gx_media_links">
+        val urls = args.placemark?.getExtendedData("gx_media_links")!!.split(" ")
+        Log.d("kML", "URLS: " + urls)
+
+        val adapter=MapDetailSliderAdapter(context,urls)
         slider.adapter = adapter
 
     }
