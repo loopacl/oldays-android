@@ -26,3 +26,15 @@
 -dontwarn org.conscrypt.**
 # A resource is loaded with a relative path so the package of this class must be preserved.
 -keepnames class okhttp3.internal.publicsuffix.PublicSuffixDatabase
+
+-keep public class * implements com.bumptech.glide.module.GlideModule
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
+  **[] $VALUES;
+  public *;
+}
+#Glide: If you're targeting any API level less than Android API 27, also include:
+#https://bumptech.github.io/glide/doc/download-setup.html#proguard
+#```pro
+-dontwarn com.bumptech.glide.load.resource.bitmap.VideoDecoder

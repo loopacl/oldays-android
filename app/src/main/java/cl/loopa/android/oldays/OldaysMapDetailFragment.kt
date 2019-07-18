@@ -28,30 +28,24 @@ import kotlinx.android.synthetic.main.fragment_oldays_map_detail.*
  *
  */
 class OldaysMapDetailFragment : Fragment() {
-    /*
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null*/
+
     val args: OldaysMapDetailFragmentArgs by navArgs()
 
-
     private var listener: OnFragmentInteractionListener? = null
-
+/*
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         /*arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }*/
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-
-        activity?.setTitle("Your Title")
 
 
         // Inflate the layout for this fragment
@@ -66,8 +60,6 @@ class OldaysMapDetailFragment : Fragment() {
         //Showing the title by @Rajarshi https://stackoverflow.com/q/52511136/3369131
         /*Navigation.findNavController(view)
             .getCurrentDestination()?.setLabel(name*/
-
-        activity?.setTitle("Your Title")
 
         val titulo: TextView = getView()!!.findViewById(R.id.titulo) as TextView
         titulo.text = args.placemark?.mName.toString()
@@ -88,11 +80,10 @@ class OldaysMapDetailFragment : Fragment() {
 
     fun stripHtml(htmls: String): Spanned {
 
-        Log.d("Antes", htmls)
+        //Log.d("Antes", htmls)
+        // Regular Expressions in Kotlin by @alessiostalla
+        // https://www.baeldung.com/kotlin-regular-expressions#replacing
         var rgx = "<img.*?./>".toRegex()
-        // on API 24 and newer, otherwise flags are ignored and Html.fromHtml(String) is used
-        // https://developer.android.com/reference/androidx/core/text/HtmlCompat.html
-        // @Rockney https://stackoverflow.com/a/37905107/3369131
         val htmlr = rgx.replace(htmls, "")
         Log.d("Después",htmlr)
         var txt : Spanned
@@ -101,18 +92,23 @@ class OldaysMapDetailFragment : Fragment() {
         if (htmls == null) {
             txt = SpannableString("")
         } else if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {*/
+
+            // on API 24 and newer, otherwise flags are ignored and Html.fromHtml(String) is used
+            // https://developer.android.com/reference/androidx/core/text/HtmlCompat.html
+            // @Rockney https://stackoverflow.com/a/37905107/3369131
             txt = HtmlCompat.fromHtml(htmlr, HtmlCompat.FROM_HTML_MODE_LEGACY)/*
+
         } else {
             txt = Html.fromHtml(html)
         }*/
         return txt
     }
-
+/*
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
-    }
-
+    }*/
+/*
     override fun onAttach(context: Context) {
         super.onAttach(context)
         /*if (context is OnFragmentInteractionListener) {
@@ -120,7 +116,7 @@ class OldaysMapDetailFragment : Fragment() {
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }*/
-    }
+    }*/
 
     override fun onDetach() {
         super.onDetach()
