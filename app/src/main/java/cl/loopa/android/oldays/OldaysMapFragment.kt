@@ -1,9 +1,7 @@
 package cl.loopa.android.oldays
 
-import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.Context
-import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -14,18 +12,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.hardware.SensorManager
-import android.location.Criteria
-import android.location.LocationManager
 import android.net.Network
 import android.util.Log
 import androidx.core.content.ContextCompat.getSystemService
 
 import android.net.NetworkInfo
-import android.text.Html
-import android.widget.FrameLayout
-import android.widget.Toast
-import androidx.fragment.app.FragmentTransaction
 import androidx.navigation.findNavController
 
 import org.osmdroid.bonuspack.kml.KmlFeature
@@ -35,16 +26,11 @@ import org.osmdroid.bonuspack.kml.KmlPlacemark
 
 //import android.R
 
-import cl.loopa.android.oldays.PopupPinOldaysMapAdapter
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 
 import com.google.android.gms.maps.model.MapStyleOptions
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_oldays_map.*
-import kotlinx.android.synthetic.main.fragment_oldays_map.view.*
 
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -289,53 +275,38 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
     }*/
 
-
-    /* DETECTAR SI HAY CONEXION */
-    // TODO: Move it to a class
+    /**
+     *
+     * @param context
+     * @return true if connected to Internet
+     * by @pavelnazimok https://stackoverflow.com/a/53078141/3369131
+     */
     private fun estaConectado(): Boolean {
+        val cm : ConnectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-        // from fragment Context needs getActivity()?.
-        // @Zoran https://stackoverflow.com/a/24427450/3369131
-        // @Trinimon https://stackoverflow.com/a/16481362/3369131
-        // @Eran https://stackoverflow.com/a/25329322/
+        if (Build.VERSION.SDK_INT < 23) {
+            val ni : NetworkInfo? = cm.activeNetworkInfo
 
-        val tipoConexion = getConnectionType(activity!!.applicationContext)
-
-        if(tipoConexion == 0){
-            //Log.d("Conectado", "NO")
-            return false
-        }
-        //Log.d("Conectado", "SÍ")
-        return true
-    }
-
-    // Función tipo de conexión para SDK28 (Android P) by @user1032613 https://stackoverflow.com/a/53243938/3369131
-    // @IntRange(from = 0, to = 2)
-    private fun getConnectionType(context: Context): Int {
-        var result = 0 // Returns connection type. 0: none; 1: mobile data; 2: wifi
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager?
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            cm?.run {
-                cm.getNetworkCapabilities(cm.activeNetwork)?.run {
-                    if (hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
-                        result = 2
-                    } else if (hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR)) {
-                        result = 1
-                    }
-                }
+            if(ni!=null){
+                return (ni.isConnected()/* && (ni.getType() == ConnectivityManager.TYPE_WIFI || ni.getType() == ConnectivityManager.TYPE_MOBILE)*/)
             }
+
         } else {
-            cm?.run {
-                cm.activeNetworkInfo?.run {
-                    if (type == ConnectivityManager.TYPE_WIFI) {
-                        result = 2
-                    } else if (type == ConnectivityManager.TYPE_MOBILE) {
-                        result = 1
-                    }
+            val n:Network? = cm.activeNetwork
+
+            n?.run{
+                val nc: NetworkCapabilities? = cm.getNetworkCapabilities(n)
+                nc?.run{
+                    return (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                            nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                            nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN) ||
+                            nc.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) ||
+                            nc.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
                 }
             }
         }
-        return result
+
+        return false
     }
 /*
     fun stripHtml(html: String): String {
