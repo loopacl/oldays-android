@@ -168,13 +168,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,16f))
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
-        mMap.uiSettings.isZoomControlsEnabled()
+        mMap.uiSettings.setZoomControlsEnabled(true)
         //mMap.isMyLocationEnabled = true
 
         mMap.uiSettings.setMapToolbarEnabled(true)
-
-
-
 
         if (estaConectado()) {
             Log.d("Conectado", "SÍ")
@@ -292,16 +289,21 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
             }
 
         } else {
+
             val n:Network? = cm.activeNetwork
 
             n?.run{
                 val nc: NetworkCapabilities? = cm.getNetworkCapabilities(n)
                 nc?.run{
-                    return (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                            nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                            nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN) ||
-                            nc.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) ||
-                            nc.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET))
+                    if (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                        nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                        nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN) ||
+                        nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI_AWARE) ||
+                        nc.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) ||
+                        nc.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)){
+
+                        return true
+                    }
                 }
             }
         }

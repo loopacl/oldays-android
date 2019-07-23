@@ -15,7 +15,7 @@ android {
         minSdkVersion 14 //osmbonuspack actual pide 16. Google Maps SDK v3 pide API16
         targetSdkVersion 29
         //multiDexEnabled true //https://developer.android.com/studio/build/multidex
-        versionCode 3
+        versionCode 4
         versionName "@string/app_ver"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
