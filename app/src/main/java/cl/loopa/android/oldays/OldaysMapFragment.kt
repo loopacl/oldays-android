@@ -206,7 +206,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
                 Log.d("kML", "Punto: " + punto.mName)
 
-                val marker: Marker = mMap.addMarker(
+                mMap.addMarker(
                     MarkerOptions()
                         .position(
                             LatLng(

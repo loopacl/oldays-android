@@ -14,7 +14,7 @@ buildscript {
         // in the individual module build.gradle files
 
         // Safe args https://developer.android.com/jetpack/androidx/releases/navigation#declaring_dependencies
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-alpha06"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.1.0-beta02"
     }
 }
 

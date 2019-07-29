@@ -27,7 +27,8 @@ class OldaysMapViewModel : ViewModel() {
 
     fun cargaKML() : ArrayList<KmlFeature>{
 
-        val urlString = "http://www.google.com/maps/d/kml?forcekml=1&mid=1X17DMfvcAVNH0qbrX-jJqSDDoAsHQYf6"
+        // Usa https si no quieres un error de Cleartext HTTP en Android 8+ https://stackoverflow.com/a/50834600/3369131
+        val urlString = "https://www.google.com/maps/d/kml?forcekml=1&mid=1X17DMfvcAVNH0qbrX-jJqSDDoAsHQYf6"
 
         val kmlDocument = KmlDocument()
 

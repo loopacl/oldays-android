@@ -3,10 +3,11 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 //Glide https://bumptech.github.io/glide/doc/download-setup.html
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-kapt'
 
 // https://developer.android.com/jetpack/androidx/releases/navigation#declaring_dependencies
-apply plugin: "androidx.navigation.safeargs.kotlin"
+//apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 29
@@ -15,7 +16,7 @@ android {
         minSdkVersion 14 //osmbonuspack actual pide 16. Google Maps SDK v3 pide API16
         targetSdkVersion 29
         //multiDexEnabled true //https://developer.android.com/studio/build/multidex
-        versionCode 4
+        versionCode 5
         versionName "@string/app_ver"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -35,6 +36,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    /*kapt {
+        generateStubs = true
+    }
+    dataBinding {
+        enabled = true
+    }*/
 }
 
 dependencies {
@@ -75,11 +82,20 @@ dependencies {
     // https://github.com/MKergall/osmbonuspack/wiki/HowToInclude
     // La versión osmbonuspack:6.5.3 pide API16, 6.5.2 pide API14, última es 6.6.0
     implementation 'com.github.MKergall:osmbonuspack:6.5.2'
+    // OSMBonusPack 6.5.2 uses okhttp:3.7.0
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okio:okio:2.2.2'
 
     // GLIDE
-    implementation 'com.github.bumptech.glide:glide:4.9.0'
-    // Glide annotationProcessor for kotlin
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'
+    implementation ("com.github.bumptech.glide:glide:4.9.0@aar") {
+        transitive = true
+        exclude group: "com.android.support"
+    }
+    // Glide annotationProcessor for kotlin by @Riddhi & @ https://stackoverflow.com/a/49934146/3369131
+    annotationProcessor 'androidx.annotation:annotation:1.1.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    /*kapt "com.android.databinding:compiler:3.4.2"
+    kapt 'com.github.bumptech.glide:compiler:4.9.0'*/
     // OSMBonusPack 6.5.2 uses okhttp:3.7.0
     implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
 
