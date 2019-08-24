@@ -41,6 +41,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="oldaysGaleriaFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-545" />
+                            <option name="y" value="-445" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="oldaysMapDetailFragment">
                     <value>
                       <LayoutPositions>
@@ -49,6 +61,15 @@
                             <option name="x" value="-748" />
                             <option name="y" value="-445" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_oldaysMapDetailFragment_to_oldaysGaleriaFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

@@ -14,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.text.HtmlCompat
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_oldays_map_detail.*
@@ -32,14 +33,6 @@ class OldaysMapDetailFragment : Fragment() {
     val args: OldaysMapDetailFragmentArgs by navArgs()
 
     private var listener: OnFragmentInteractionListener? = null
-/*
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        /*arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }*/
-    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +62,7 @@ class OldaysMapDetailFragment : Fragment() {
         Log.d("kML", "URLS: " + urls)
 
         if(urls!=null && urls.isNotEmpty()) {
-            val adapter = MapDetailSliderAdapter(context, urls)
+            val adapter = MapDetailSliderAdapter(context, urls.toTypedArray(),args.placemark.mName)
             slider.adapter = adapter
         }
     }

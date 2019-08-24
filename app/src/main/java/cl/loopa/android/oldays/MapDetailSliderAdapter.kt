@@ -1,10 +1,12 @@
 package cl.loopa.android.oldays
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.navigation.Navigation.findNavController
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
@@ -14,7 +16,11 @@ import com.bumptech.glide.Glide
 * https://www.youtube.com/watch?v=rkABx5gh_rY
 * */
 
-class MapDetailSliderAdapter(private val context: Context? , private val urls:List<String>?): PagerAdapter(){
+class MapDetailSliderAdapter(
+    private val context: Context?,
+    private val urls:Array<String>?,
+    private val titulo:String
+    ): PagerAdapter(){
 
     private var layoutInflater:LayoutInflater?=null
 
@@ -42,11 +48,23 @@ class MapDetailSliderAdapter(private val context: Context? , private val urls:Li
                 // googleusercontent.com allows image sizing
                 // https://developers.google.com/people/image-sizing
                 .load(urls[position]+"=w480")
+                .placeholder(R.drawable.ic_launcher_foreground)
                 .centerCrop()
                 .into(image)
 
+            v.setOnClickListener {
+                Log.d("foto", "Tocó: " + position)
+                val action = OldaysMapDetailFragmentDirections.actionOldaysMapDetailFragmentToOldaysGaleriaFragment()
+                action.index = position
+                action.urls = urls
+                action.titulo = titulo
+
+                findNavController(it).navigate(action)
+            }
+
             val vp = container as ViewPager
             vp.addView(v,0)
+
         }/* else{
             image.setImageDrawable()
         }*/
