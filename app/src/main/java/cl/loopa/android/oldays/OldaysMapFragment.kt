@@ -1,8 +1,13 @@
 package cl.loopa.android.oldays
 
+import android.Manifest
 import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.pm.PackageManager
 import android.content.res.Resources
+import android.location.Criteria
+import android.location.Location
+import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -17,26 +22,28 @@ import android.util.Log
 import androidx.core.content.ContextCompat.getSystemService
 
 import android.net.NetworkInfo
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.navigation.findNavController
 
 import org.osmdroid.bonuspack.kml.KmlFeature
-import com.google.android.gms.maps.model.Marker
 import org.osmdroid.bonuspack.kml.KmlFolder
 import org.osmdroid.bonuspack.kml.KmlPlacemark
 
 //import android.R
 
 import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-
-import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.*
+import kotlinx.android.synthetic.main.fragment_oldays_map.*
 
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private lateinit var mMap: GoogleMap
     private lateinit var viewModel: OldaysMapViewModel
+
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
     var capas = ArrayList<KmlFeature>()
     var places = ArrayList<KmlPlacemark>()
@@ -186,6 +193,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         //https://pastebin.com/6UNWrrW2
         mMap.setOnInfoWindowClickListener(this)
 
+        btn_gps.setOnClickListener {
+            enableMyLocation()
+        }
+
     }
 
 
@@ -318,5 +329,58 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
            return Html.fromHtml(html).toString()
         }
     }*/
+
+
+    /**
+     * Enables the My Location layer if the fine location permission has been granted.
+     */
+    private fun enableMyLocation() {
+        if (checkSelfPermission(requireActivity(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Permission to access the location is missing.
+
+            //Pide permiso
+            requestPermissions(arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE)
+
+            //TODO: Activar GPS si no lo tiene activado https://stackoverflow.com/a/44669039/3369131
+
+        } else {
+            if (this.mMap != null) {
+                // Access to the location has been granted to the app.
+
+                // Enabling MyLocation Layer of Google Map
+                mMap.isMyLocationEnabled = true
+                //  If the button is enabled, it is only shown when the my-location layer is enabled.
+                mMap.uiSettings.isMyLocationButtonEnabled = false
+
+                // Getting LocationManager object from System Service LOCATION_SERVICE
+                // As the getActivity() method is deprecated since API 28 you can just use:
+                // @Rafael T https://stackoverflow.com/a/13306297/3369131
+                val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+                // Creating a criteria object to retrieve provider
+                val criteria = Criteria()
+
+                // Getting the name of the best provider
+                val provider = locationManager.getBestProvider(criteria, true)
+
+                // Getting Current Location
+                var location: Location? = null
+
+                if(provider!=null){
+                    location = locationManager.getLastKnownLocation(provider)
+                }
+
+                if (location != null) {
+                    val cameraPosition = CameraPosition.Builder().target(
+                        LatLng(location.latitude, location.longitude)).zoom(16f).build()
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                }
+            } else {
+                // TODO: cargar otro fragmento diciendo que instale Google Play Services
+                // y un botón esconder
+            }
+        }
+    }
+
 
 }
