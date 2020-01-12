@@ -179,14 +179,14 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         //mMap.isMyLocationEnabled = true
 
         mMap.uiSettings.setMapToolbarEnabled(true)
-
+/*
         if (estaConectado()) {
-            Log.d("Conectado", "SÍ")
+            Log.d("Conectado", "SÍ")*/
 
             viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
             capas = viewModel.getKML()
 
-        }
+        //}
 
         ponePins(capas)
 
@@ -318,7 +318,6 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
                 }
             }
         }
-
         return false
     }
 /*

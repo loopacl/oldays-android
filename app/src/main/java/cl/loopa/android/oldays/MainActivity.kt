@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 
 
 import com.google.android.material.navigation.NavigationView
@@ -41,6 +42,20 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)/*, NavigationView
         //cuando no estaba nav_host_fragment
         //setupNavigation()
 
+
+        // https://stackoverflow.com/a/57350338/3369131
+        navController.addOnDestinationChangedListener(NavController.OnDestinationChangedListener { controller, destination, arguments ->
+            // getting the current fragment id.
+            val currentFragmentID = destination.id
+            if (currentFragmentID == R.id.defaultFragment) { // showing the toolbar
+                toolbar.setVisibility(View.VISIBLE)
+            } else if (currentFragmentID == R.id.splashFragment ||
+                currentFragmentID == R.id.oldaysGaleriaFragment) { // hiding the toolbar
+                toolbar.setVisibility(View.GONE)
+            }
+        })
+
+
         /* Android Jetpack Navigation dejó demás este código */
         //val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -61,34 +76,8 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)/*, NavigationView
 
         findViewById<Toolbar>(R.id.toolbar)
             .setupWithNavController(navController,appBarConfiguration)
-
     }
-/*
-    // Setting Up One Time Navigation
-    private fun setupNavigation() {
 
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowHomeEnabled(true)
-
-        drawerLayout = findViewById(R.id.drawer_layout)
-
-        val navigationView : NavigationView = findViewById(R.id.nav_view)
-
-        val navController : NavController = Navigation.findNavController(this, R.id.nav_host_fragment)
-
-        NavigationUI.setupWithNavController(navigationView, navController)
-        NavigationUI.setupActionBarWithNavController(this, navController, drawerLayout)
-
-
-        navigationView.setNavigationItemSelectedListener(this)
-
-    }*/
-/*
-    override fun onSupportNavigateUp(): Boolean {
-        return NavigationUI.navigateUp(Navigation.findNavController(this, R.id.nav_host_fragment),drawerLayout)
-    }*/
 /*
     override fun onBackPressed() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)

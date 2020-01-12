@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/defaultFragment">
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/defaultFragment"
         android:name="cl.loopa.android.oldays.OldaysMapFragment"
@@ -55,6 +55,19 @@
             app:argType="string"
             app:nullable="true"
             android:defaultValue="Oldays" />
+    </fragment>
+    <fragment
+        android:id="@+id/splashFragment"
+        android:name="cl.loopa.android.oldays.SplashFragment"
+        android:label="fragment_splash"
+        tools:layout="@layout/fragment_splash" >
+        <!-- https://proandroiddev.com/android-navigation-component-tips-tricks-implementing-splash-screen-f0f5ce046a09 -->
+        <action
+            android:id="@+id/action_splashFragment_to_defaultFragment"
+            app:destination="@id/defaultFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"
+            />
     </fragment>
 
 </navigation>

@@ -44,7 +44,7 @@ class OldaysMapDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val name : String = args.placemark?.mName.toString()
+        val name : String = args.placemark.mName.toString()
         Log.d("kML", "Recibí: " + name)
 
         //Showing the title by @Rajarshi https://stackoverflow.com/q/52511136/3369131
@@ -52,13 +52,13 @@ class OldaysMapDetailFragment : Fragment() {
             .getCurrentDestination()?.setLabel(name*/
 
         val titulo: TextView = getView()!!.findViewById(R.id.titulo) as TextView
-        titulo.text = args.placemark?.mName.toString()
+        titulo.text = args.placemark.mName.toString()
 
         val descripcion: TextView = getView()!!.findViewById(R.id.descripcion) as TextView
-        descripcion.text = stripHtml(args.placemark?.mDescription.toString())
+        descripcion.text = stripHtml(args.placemark.mDescription.toString())
 
         // Google Maps KML put the list of images space separated urls in a <ExtendedData><Data name="gx_media_links">
-        val urls = args.placemark?.getExtendedData("gx_media_links")?.split(" ")
+        val urls = args.placemark.getExtendedData("gx_media_links")?.split(" ")
         Log.d("kML", "URLS: " + urls)
 
         if(urls!=null && urls.isNotEmpty()) {
@@ -70,7 +70,7 @@ class OldaysMapDetailFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity?.toolbar?.title = args.placemark?.mName
+        activity?.toolbar?.title = args.placemark.mName
     }
 
     fun stripHtml(htmls: String): Spanned {
