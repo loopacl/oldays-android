@@ -10,14 +10,14 @@ apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.2'
+    compileSdkVersion 29//'android-R'
+    buildToolsVersion '29.0.3'//"30.0.0 rc2"
     defaultConfig {
         applicationId "cl.loopa.android.oldays"
         minSdkVersion 14 //osmbonuspack actual pide 16. Google Maps SDK v3 pide API16
-        targetSdkVersion 29
+        targetSdkVersion 29//'R'
         multiDexEnabled true //https://developer.android.com/studio/build/multidex
-        versionCode 8
+        versionCode 10
         versionName "@string/app_ver"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
@@ -42,12 +42,12 @@ android {
     }
     // Keep the following configuration in order to target Java 8. https://developer.android.com/studio/write/java8-support
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     // macOS fix by @EpicPandaForce https://stackoverflow.com/a/52561908/3369131
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     /*kapt {
         generateStubs = true
@@ -58,21 +58,22 @@ android {
 }
 
 dependencies {
-    def nav_version = '2.2.0-rc04'
+    def nav_version = '2.3.0-alpha04'
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    // Kotlin plugin should be enabled before 'kotlin-android-extensions'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.appcompat:appcompat:1.1.0'
     //Android Core has HtmlCompat @Sagar Balyan https://stackoverflow.com/a/37905107/3369131
-    implementation 'androidx.core:core-ktx:1.2.0-rc01'
+    implementation 'androidx.core:core-ktx:1.3.0-alpha02'
     //#io19 https://www.youtube.com/watch?v=29gLA90m6Gk
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta4'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     //implementation 'androidx.recyclerview:recyclerview:1.1.0-alpha03'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0-rc03'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0-rc03'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     implementation 'androidx.vectordrawable:vectordrawable:1.1.0'
 
     // Jetpack Navigation (Google I/O'19) https://youtu.be/JFGq0asqSuA?t=300
@@ -83,7 +84,8 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
 
     //implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.drawerlayout:drawerlayout:1.1.0-alpha03'
+    implementation 'androidx.drawerlayout:drawerlayout:1.1.0-alpha04'
+    implementation "androidx.viewpager2:viewpager2:1.0.0"
 
     // Teléfonos usados no tienen última versión,
     // Mínimo debiese ser v9.2.1. Emuladores < API19 tienen Google Play Services 9.2
@@ -98,7 +100,7 @@ dependencies {
     implementation 'com.github.MKergall:osmbonuspack:6.5.2'
     // OSMBonusPack 6.5.2 uses okhttp:3.7.0
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'
-    implementation 'com.squareup.okio:okio:2.3.0'
+    implementation 'com.squareup.okio:okio:2.4.3'
 
     // GLIDE
     implementation('com.github.bumptech.glide:glide:4.11.0@aar') {
@@ -106,17 +108,17 @@ dependencies {
         exclude group: "com.android.support"
     }
     // Glide annotationProcessor for kotlin by @Riddhi & @ https://stackoverflow.com/a/49934146/3369131
-    annotationProcessor 'androidx.annotation:annotation:1.1.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
-    /*kapt "com.android.databinding:compiler:3.4.2"
-    kapt 'com.github.bumptech.glide:compiler:4.9.0'*/
+    kapt 'androidx.annotation:annotation:1.1.0'/*
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'*/
+    kapt "com.android.databinding:compiler:3.4.2"
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
     // OSMBonusPack 6.5.2 uses okhttp:3.7.0
-    implementation "com.github.bumptech.glide:okhttp3-integration:4.9.0"
+    implementation "com.github.bumptech.glide:okhttp3-integration:4.11.0"
 
     // TouchImageView for Android (for pinch zooming photos)
     implementation 'com.github.MikeOrtiz:TouchImageView:2.2.0'
 
-    testImplementation 'junit:junit:4.13-beta-3'
-    androidTestImplementation 'androidx.test:runner:1.3.0-alpha03'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha03'
+    testImplementation 'junit:junit:4.13'
+    androidTestImplementation 'androidx.test:runner:1.3.0-alpha04'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0-alpha04'
 }

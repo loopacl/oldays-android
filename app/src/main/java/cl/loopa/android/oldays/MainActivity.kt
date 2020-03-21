@@ -44,14 +44,15 @@ class MainActivity : AppCompatActivity(R.layout.activity_main)/*, NavigationView
 
 
         // https://stackoverflow.com/a/57350338/3369131
-        navController.addOnDestinationChangedListener(NavController.OnDestinationChangedListener { controller, destination, arguments ->
+        navController.addOnDestinationChangedListener(NavController.OnDestinationChangedListener { _, destination, _ ->
             // getting the current fragment id.
             val currentFragmentID = destination.id
-            if (currentFragmentID == R.id.defaultFragment) { // showing the toolbar
-                toolbar.setVisibility(View.VISIBLE)
+            if (currentFragmentID == R.id.defaultFragment ||
+                currentFragmentID == R.id.oldaysMapDetailFragment) { // showing the toolbar
+                toolbar.visibility = View.VISIBLE
             } else if (currentFragmentID == R.id.splashFragment ||
                 currentFragmentID == R.id.oldaysGaleriaFragment) { // hiding the toolbar
-                toolbar.setVisibility(View.GONE)
+                toolbar.visibility = View.GONE
             }
         })
 

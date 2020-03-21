@@ -27,7 +27,6 @@
       https://bumptech.github.io/glide/doc/download-setup.html#local-storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
-
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"

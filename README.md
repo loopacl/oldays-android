@@ -7,18 +7,21 @@ y la opción de ver la foto a pantalla completa.
 Una app en Android y iOS que vamos a hacer con unos amigos por el amor al arte,
 para enseñarles a programar algo más o menos complejo y que todos necesitamos siempre.
 
-100% Kotlin & Jetpack.
-
 Para que lo copien y comiencen a programar aplicaciones nativas, y se integren al equipo o generen
 proyectos propios y negocios programando profesionalmente.
+
+Kotlin & Jetpack.
+
 
 En esta versión ocuparemos las tecnologías propietarias de Google Maps
 
 Lo que falta por hacer:
-- Abrir panel con información de la foto (Material Design)
--
+- Mover el slider de la cabecera de un lugar a ViewPager2
+- Deshabilitar/Habilitar el ViewPager2 cuando se hace zoom a una foto en pantalla completa para poder hacer scroll en sentido horizontal
+- Ponerle un botón escondible para regresar cuando se está en pantalla completa
+- Resolver todos los warnings
 - ¿Integrar ARcore?
 
-## Requisitos
+## Materiales
 - Android Studio
 - Llave de Google Maps

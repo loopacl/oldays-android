@@ -35,7 +35,7 @@ import org.osmdroid.bonuspack.kml.KmlPlacemark
 
 import com.google.android.gms.maps.*
 import com.google.android.gms.maps.model.*
-import kotlinx.android.synthetic.main.fragment_oldays_map.*
+//import kotlinx.android.synthetic.main.fragment_oldays_map.*
 
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -192,10 +192,10 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
         //https://pastebin.com/6UNWrrW2
         mMap.setOnInfoWindowClickListener(this)
-
+/*
         btn_gps.setOnClickListener {
             enableMyLocation()
-        }
+        }*/
 
     }
 
@@ -343,7 +343,6 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
             //TODO: Activar GPS si no lo tiene activado https://stackoverflow.com/a/44669039/3369131
 
         } else {
-            if (this.mMap != null) {
                 // Access to the location has been granted to the app.
 
                 // Enabling MyLocation Layer of Google Map
@@ -374,10 +373,6 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
                         LatLng(location.latitude, location.longitude)).zoom(16f).build()
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                 }
-            } else {
-                // TODO: cargar otro fragmento diciendo que instale Google Play Services
-                // y un botón esconder
-            }
         }
     }
 

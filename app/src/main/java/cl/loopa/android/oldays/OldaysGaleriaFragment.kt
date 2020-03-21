@@ -3,18 +3,13 @@ package cl.loopa.android.oldays
 
 import android.os.Bundle
 import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import androidx.core.view.get
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_oldays_galeria.*
-
-
-
 /**
  * A simple [Fragment] subclass.
  */
@@ -38,16 +33,43 @@ class OldaysGaleriaFragment : Fragment() {
         val cual : Int = args.index
         Log.d("kML", "El: " + cual)
 
-        //fullscreen_content.setImageResource(R.drawable.ic_launcher_foreground)
 
+        val adapter = OldaysGaleriaAdapter()
+
+        pager.adapter = adapter
+        adapter.setItem(args.urls)
+
+        //pager.setCurrentItem(cual, false)
+
+        // I just copied this @Daniel Kim code https://stackoverflow.com/a/57516428/3369131 and it worked
+        val recyclerView = pager.getChildAt(0)
+        recyclerView.apply {
+            val itemCount = adapter?.itemCount ?: 0
+            if (itemCount >= cual) {
+                viewTreeObserver.addOnGlobalLayoutListener(object :
+                    ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        viewTreeObserver.removeOnGlobalLayoutListener(this)
+
+                        // False for without animation scroll
+                        pager.setCurrentItem(cual, false)
+                    }
+                })
+            }
+        }
+
+
+        //adapter.list?.set(2,args.urls?.get(2))
+
+        //fullscreen_content.setImageResource(R.drawable.ic_launcher_foreground)
+/*
         if (args.urls!=null) {
             Glide.with(this) // could be an issue!
                 .load(args.urls?.get(args.index))
                 .placeholder(R.drawable.ic_launcher_foreground)
                 .into(fullscreen_content)
-        }
+        }*/
     }
-
 
     override fun onResume() {
         super.onResume()
