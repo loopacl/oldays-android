@@ -26,7 +26,7 @@ class SplashFragment : Fragment() {
             val navController = view?.findNavController()
             navController?.navigate(action)
 
-        }, 3000)
+        }, 0)
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash, container, false)

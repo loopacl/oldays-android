@@ -55,13 +55,13 @@ abstract class PopupPinOldaysMapAdapter : GoogleMap.InfoWindowAdapter {
         if (marker != null) {
 
             popup = inflater!!.inflate(R.layout.fragment_oldays_map_popup_pin, null)
-            var tv = popup!!.findViewById<View>(R.id.title) as TextView
+            val tv = popup!!.findViewById<View>(R.id.title) as TextView
             tv.text = marker.title
-/*
+
             if (marker.snippet != "null") {
-                tv = popup!!.findViewById<View>(R.id.snippet) as TextView
-                tv.text = marker.snippet
-            }*/
+                val descripcion = popup!!.findViewById<View>(R.id.descripcion) as TextView
+                descripcion.text = marker.snippet
+            }
         }
 
         return null

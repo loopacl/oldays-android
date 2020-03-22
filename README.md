@@ -16,10 +16,11 @@ Kotlin & Jetpack.
 En esta versión ocuparemos las tecnologías propietarias de Google Maps
 
 Lo que falta por hacer:
-- Mover el slider de la cabecera de un lugar a ViewPager2
-- Deshabilitar/Habilitar el ViewPager2 cuando se hace zoom a una foto en pantalla completa para poder hacer scroll en sentido horizontal
-- Ponerle un botón escondible para regresar cuando se está en pantalla completa
-- Resolver todos los warnings
+- Verificar que tiene instalado Google Play Services 9.6.1+ antes de aplicarle estilo al mapa.
+- Mover el slider de la cabecera de un lugar a ViewPager2.
+- Deshabilitar/Habilitar el ViewPager2 cuando se hace zoom a una foto en pantalla completa para poder hacer scroll en sentido horizontal.
+- Ponerle un botón escondible para regresar cuando se está en pantalla completa.
+- Resolver todos los warnings.
 - ¿Integrar ARcore?
 
 ## Materiales

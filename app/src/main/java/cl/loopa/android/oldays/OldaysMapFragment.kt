@@ -25,7 +25,9 @@ import android.net.NetworkInfo
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.checkSelfPermission
+import androidx.core.content.pm.PackageInfoCompat
 import androidx.navigation.findNavController
+import com.google.android.gms.common.GoogleApiAvailability
 
 import org.osmdroid.bonuspack.kml.KmlFeature
 import org.osmdroid.bonuspack.kml.KmlFolder
@@ -149,7 +151,11 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         //Quita botones
         //mMap.getUiSettings().setMapToolbarEnabled(false)
 
-        //TODO: Verify Google Play Services version, maybe
+        //TODO: Verify Google Play Services v9.6.1+, HOW HELP
+        // https://developer.android.com/reference/androidx/core/content/pm/PackageInfoCompat.html#getLongVersionCode
+        // https://stackoverflow.com/q/18737632/3369131
+
+        //if(PackageInfoCompat.getLongVersionCode(PackageManager.getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0 )))
 
         //Adding a styled map
         //https://developers.google.com/maps/documentation/android-sdk/styling
@@ -217,6 +223,21 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
                 Log.d("kML", "Punto: " + punto.mName)
 
+
+                var n_fotos : String = "Sin fotos"
+
+                if (punto.getExtendedData("gx_media_links").isNotEmpty()){
+
+                    val nfotos = punto.getExtendedData("gx_media_links")?.split(" ")?.size!!
+
+                    n_fotos = if(nfotos == 1){
+                        "1 foto"
+                    } else{
+                        "$nfotos fotos"
+                    }
+                }
+
+
                 mMap.addMarker(
                     MarkerOptions()
                         .position(
@@ -226,7 +247,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
                             )
                         )
                         .title(punto.mName)
-                        //.snippet(stripHtml(punto.mDescription))
+                        .snippet(n_fotos)
                 )
 
                 places.add(punto)

@@ -1,13 +1,12 @@
 package cl.loopa.android.oldays
 
-
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.core.view.get
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_oldays_galeria.*
 /**
@@ -28,35 +27,44 @@ class OldaysGaleriaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val name : String? = args.urls?.get(args.index)
-        Log.d("kML", "Recibí: " + name)
+        //val name : String? = args.urls?.get(args.index)
+        //Log.d("kML", "Recibí: " + name)
         val cual : Int = args.index
-        Log.d("kML", "El: " + cual)
-
+        //Log.d("kML", "El: " + cual)
 
         val adapter = OldaysGaleriaAdapter()
 
         pager.adapter = adapter
         adapter.setItem(args.urls)
 
-        //pager.setCurrentItem(cual, false)
-
+        // Este código permite que la pantalla siguiente comience desde la foto seleccionada...
         // I just copied this @Daniel Kim code https://stackoverflow.com/a/57516428/3369131 and it worked
         val recyclerView = pager.getChildAt(0)
         recyclerView.apply {
-            val itemCount = adapter?.itemCount ?: 0
+            val itemCount = adapter.itemCount// ?: 0
+            @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
             if (itemCount >= cual) {
                 viewTreeObserver.addOnGlobalLayoutListener(object :
                     ViewTreeObserver.OnGlobalLayoutListener {
+                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
                     override fun onGlobalLayout() {
                         viewTreeObserver.removeOnGlobalLayoutListener(this)
 
+                        // ...Principalmente esta parte
                         // False for without animation scroll
                         pager.setCurrentItem(cual, false)
                     }
                 })
             }
         }
+
+
+        if(args.urls!!.size <2){
+            // Intento de bloquear el sweeping para poder recorrer la foto con el dedo
+            pager.isUserInputEnabled = false
+        }
+
+
 
 
         //adapter.list?.set(2,args.urls?.get(2))
@@ -71,6 +79,7 @@ class OldaysGaleriaFragment : Fragment() {
         }*/
     }
 
+    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun onResume() {
         super.onResume()
         activity?.toolbar?.title = args.titulo
