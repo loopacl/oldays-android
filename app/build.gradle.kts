@@ -34,14 +34,6 @@ kotlin {
  * build options.
  */
 android {
-    signingConfigs {
-        getByName("debug") {
-            storeFile = file("C:\\Users\\oosca\\Downloads\\loopa-oldays-android.jks")
-            storePassword = "Marcoleta-Fernandez"
-            keyPassword = "Helado-Juan"
-            keyAlias = "upload"
-        }
-    }
     /**
      * The app's namespace. Used primarily to access app resources.
      */
