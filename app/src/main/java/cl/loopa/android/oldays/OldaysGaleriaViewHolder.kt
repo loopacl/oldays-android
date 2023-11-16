@@ -5,7 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import kotlinx.android.synthetic.main.galeria_item.view.*
+//import kotlinx.android.synthetic.main.galeria_item.view.*
+import cl.loopa.android.oldays.databinding.GaleriaItemBinding
 
 class OldaysGaleriaViewHolder constructor(itemView: View) :
     RecyclerView.ViewHolder(itemView) {
@@ -17,7 +18,7 @@ class OldaysGaleriaViewHolder constructor(itemView: View) :
         Glide.with(itemView.context) // could be an issue!
             .load(category)
             .placeholder(R.drawable.ic_launcher_foreground)
-            .into(itemView.fullscreen_content)
+            .into(itemView.findViewById(R.id.fullscreen_content))
 
         //itemView.categoryName.text = category.name
     }

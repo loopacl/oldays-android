@@ -38,10 +38,10 @@
         android:background="@android:color/white"
         android:contentDescription="@string/my_location"
         android:padding="8dp"
-        android:tint="@android:color/black"
         app:layout_constraintEnd_toEndOf="@+id/map_container"
         app:layout_constraintTop_toTopOf="@+id/map_container"
-        app:srcCompat="@drawable/ic_my_location_black_24dp" />
+        app:srcCompat="@drawable/ic_my_location_black_24dp"
+        app:tint="@android:color/black" />
     <!--
         <Button
             android:id="@+id/button2"

@@ -1,6 +1,10 @@
 package cl.loopa.android.oldays
 
+//import com.google.android.gms.maps.*
+//import com.google.android.gms.maps.model.*
+
 import android.Manifest
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.pm.PackageManager
@@ -11,39 +15,47 @@ import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.net.Network
-import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
-
-import android.net.NetworkInfo
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.checkSelfPermission
-import androidx.core.content.pm.PackageInfoCompat
+import androidx.core.content.PermissionChecker
+import androidx.core.content.PermissionChecker.checkSelfPermission
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.google.android.gms.common.GoogleApiAvailability
-
+import cl.loopa.android.oldays.databinding.FragmentOldaysMapBinding
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import org.osmdroid.bonuspack.kml.KmlFeature
 import org.osmdroid.bonuspack.kml.KmlFolder
 import org.osmdroid.bonuspack.kml.KmlPlacemark
 
-//import android.R
 
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.*
 //import kotlinx.android.synthetic.main.fragment_oldays_map.*
 
 
 class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
+    private var _binding: FragmentOldaysMapBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
     private lateinit var mMap: GoogleMap
-    private lateinit var viewModel: OldaysMapViewModel
+    private val viewModel: OldaysMapViewModel by viewModels()
 
     private val LOCATION_PERMISSION_REQUEST_CODE = 1
 
@@ -67,7 +79,13 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         container: ViewGroup?,
         savedInstanceState: Bundle?
 
-    ): View? {
+    ): View {
+
+        val homeViewModel =
+            ViewModelProvider(this).get(OldaysMapViewModel::class.java)
+
+        _binding = FragmentOldaysMapBinding.inflate(inflater, container, false)
+        val root: View = binding.root
 
         /* https://www.youtube.com/watch?time_continue=95&v=x9Z0TNdAJ60
         val binding: FragmentTitleBinding = DataBindingUtil.inflate(
@@ -91,38 +109,19 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         // https://developers.google.com/maps/documentation/android-api/map
         val mapFragment : SupportMapFragment = SupportMapFragment.newInstance()
         //val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        //@oscarr: It would be cool to put a Loading... fragment and replace it when we have the data
+        //@ooscarr TODO: It would be cool to put a Loading... fragment and replace it when we have the data
 
         /*val mF = childFragmentManager.findFragmentByTag("map") as SupportMapFragment
         if(mF!=null && mF.isAdded){*/
-            childFragmentManager.beginTransaction().replace(R.id.map_container, mapFragment)/*.addToBackStack("map")*/.commit/*AllowingStateLoss*/()
+        childFragmentManager.beginTransaction().replace(cl.loopa.android.oldays.R.id.map_container, mapFragment)/*.addToBackStack("map")*/.commit/*AllowingStateLoss*/()
         /*}else{
             childFragmentManager.beginTransaction().add(R.id.map_container, mapFragment,"map")/*.addToBackStack("map")*/.commitAllowingStateLoss()
         }*/
         mapFragment.getMapAsync(this)
 
-        return inflater.inflate(R.layout.fragment_oldays_map, container, false)
-
+        //return inflater.inflate(R.layout.fragment_oldays_map, container, false)
+        return root
     }
-/*
-    override fun onDestroyView() {
-        try{
-        val mapFragment = childFragmentManager.findFragmentByTag("map") as SupportMapFragment
-        if (mapFragment != null) {
-            childFragmentManager.beginTransaction().remove(mapFragment).commit()
-        }}
-        /*try {
-            val fragment : Fragment? = (childFragmentManager.findFragmentById(R.id.map))
-            val ft : FragmentTransaction = getActivity().getSupportFragmentManager()
-                .beginTransaction();
-            ft.remove(fragment);
-            ft.commit();
-        }*/ catch (e : Exception) {
-            e.printStackTrace()
-        }
-
-        super.onDestroyView()
-    }*/
 
 
 /*
@@ -143,10 +142,43 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
     }*/
 
 
+
+    //Adding a styled map
+    //https://developers.google.com/maps/documentation/android-sdk/styling
+    //https://developers.google.com/maps/documentation/android-api/hiding-features
+    //https://codelabs.developers.google.com/codelabs/advanced-android-kotlin-training-maps
+    private fun setMapStyle(map: GoogleMap) {
+        try {
+            // Customize the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            val success = map.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    requireContext(),
+                    cl.loopa.android.oldays.R.raw.map_style_oldays
+                )
+            )
+            if (!success) {
+                Log.e(TAG, "Style parsing failed.")
+            }
+        } catch (e: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e)
+        }
+
+    }
+
+    /**
+     * Manipulates the map when it's available.
+     * The API invokes this callback when the map is ready for use.
+     * https://developers.google.com/maps/documentation/android-sdk/styling
+     */
     override fun onMapReady(googleMap: GoogleMap) {
+
         mMap = googleMap
 
         Log.d("Mapa", "Listo")
+        if (mMap != null) {
+            setMapStyle(mMap)
+        }
 
         //Quita botones
         //mMap.getUiSettings().setMapToolbarEnabled(false)
@@ -157,22 +189,6 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
         //if(PackageInfoCompat.getLongVersionCode(PackageManager.getPackageInfo(GoogleApiAvailability.GOOGLE_PLAY_SERVICES_PACKAGE, 0 )))
 
-        //Adding a styled map
-        //https://developers.google.com/maps/documentation/android-sdk/styling
-        //https://developers.google.com/maps/documentation/android-api/hiding-features
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            val success : Boolean = mMap.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    context, R.raw.map_style_oldays))
-
-            if (!success) {
-                Log.e(TAG, "Style parsing failed.")
-            }
-        } catch (e : Resources.NotFoundException) {
-            Log.e(TAG, "Can't find style. Error: ", e)
-        }
 
         //mMap.setPadding(toolbar.height, 0, 0, 0)
 
@@ -181,30 +197,31 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,16f))
 
         //mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE)
-        mMap.uiSettings.setZoomControlsEnabled(true)
+        //by default is enabled
+        //mMap.uiSettings.isZoomControlsEnabled = true
         //mMap.isMyLocationEnabled = true
 
-        mMap.uiSettings.setMapToolbarEnabled(true)
-/*
-        if (estaConectado()) {
-            Log.d("Conectado", "SÍ")*/
+        //by default is enabled
+        //mMap.uiSettings.isMapToolbarEnabled = true
 
-            viewModel = ViewModelProviders.of(this).get(OldaysMapViewModel::class.java)
+        if (estaConectado(requireContext())) {
+            Log.d("Conectado", "SÍ")
             capas = viewModel.getKML()
 
-        //}
+        } else{
+            Log.d("Conectado", "NO")
+        }
 
         ponePins(capas)
 
         //https://pastebin.com/6UNWrrW2
         mMap.setOnInfoWindowClickListener(this)
-/*
-        btn_gps.setOnClickListener {
+
+        binding.btnGps.setOnClickListener {
             enableMyLocation()
-        }*/
+        }
 
     }
-
 
     fun ponePins(capas : ArrayList<KmlFeature>){
 
@@ -226,7 +243,7 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
                 var n_fotos : String = "Sin fotos"
 
-                if (punto.getExtendedData("gx_media_links").isNotEmpty()){
+                if (punto.mExtendedData.containsKey("gx_media_links") && punto.getExtendedData("gx_media_links").isNotEmpty()){
 
                     val nfotos = punto.getExtendedData("gx_media_links")?.split(" ")?.size!!
 
@@ -255,18 +272,30 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
 
             }
 
-            }
+        }
 
-        //}
+//}
 
-        // Instance abstract object https://kotlinlang.org/docs/reference/object-declarations.html
-        // Thanks, @Ronald Martin https://stackoverflow.com/a/34143646/3369131
-        val popup = object : PopupPinOldaysMapAdapter(){
+// Instance abstract object https://kotlinlang.org/docs/reference/object-declarations.html
+// Thanks, @Ronald Martin https://stackoverflow.com/a/34143646/3369131
+        /*val popup = object : PopupPinOldaysMapAdapter(){
             override val inflater: LayoutInflater? = layoutInflater
         }
         mMap.setInfoWindowAdapter(popup)
-    }
+        }*/
 
+
+
+
+
+// SafeArgs https://events.google.com/io/schedule/events/2d0cb491-325a-48fb-8eea-6a9452f3b33b
+// https://developer.android.com/jetpack/androidx/releases/navigation
+        /*private fun abrirDetalle(view: View) {
+        val navController = view.findNavController()
+        navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
+        }*/
+
+    }
 
     // Abrir detalle al hacer click en infoWindow
     // https://developers.google.com/maps/documentation/android-sdk/marker#associate_data_with_a_marker
@@ -296,66 +325,37 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
         }
     }
 
-
-    // SafeArgs https://events.google.com/io/schedule/events/2d0cb491-325a-48fb-8eea-6a9452f3b33b
-    // https://developer.android.com/jetpack/androidx/releases/navigation
-    /*private fun abrirDetalle(view: View) {
-        val navController = view.findNavController()
-        navController.navigate(OldaysMapFragmentDirections.actionDefaultFragmentToOldaysMapDetailFragment())
-    }*/
-
-    /**
-     *
-     * @param context
-     * @return true if connected to Internet
-     * by @pavelnazimok https://stackoverflow.com/a/53078141/3369131
-     */
-    private fun estaConectado(): Boolean {
-        val cm : ConnectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        if (Build.VERSION.SDK_INT < 23) {
-            val ni : NetworkInfo? = cm.activeNetworkInfo
-
-            if(ni!=null){
-                return (ni.isConnected()/* && (ni.getType() == ConnectivityManager.TYPE_WIFI || ni.getType() == ConnectivityManager.TYPE_MOBILE)*/)
-            }
-
-        } else {
-
-            val n:Network? = cm.activeNetwork
-
-            n?.run{
-                val nc: NetworkCapabilities? = cm.getNetworkCapabilities(n)
-                nc?.run{
-                    if (nc.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                        nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                        nc.hasTransport(NetworkCapabilities.TRANSPORT_VPN) ||
-                        nc.hasTransport(NetworkCapabilities.TRANSPORT_WIFI_AWARE) ||
-                        nc.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) ||
-                        nc.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)){
-
-                        return true
-                    }
-                }
-            }
+// https://stackoverflow.com/a/57284789/3369131
+private fun estaConectado(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        val nw      = connectivityManager.activeNetwork ?: return false
+        val actNw = connectivityManager.getNetworkCapabilities(nw) ?: return false
+        return when {
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+            //for other device how are able to connect with Ethernet
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+            //for check internet over Bluetooth
+            actNw.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> true
+            else -> false
         }
-        return false
+    } else {
+        return connectivityManager.activeNetworkInfo?.isConnected ?: false
     }
-/*
-    fun stripHtml(html: String): String {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-           return Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY).toString()
-        } else {
-           return Html.fromHtml(html).toString()
-        }
-    }*/
+}
+
+
 
 
     /**
-     * Enables the My Location layer if the fine location permission has been granted.
-     */
-    private fun enableMyLocation() {
-        if (checkSelfPermission(requireActivity(),Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+    * Enables the My Location layer if the fine location permission has been granted.
+    */
+    fun enableMyLocation() {
+
+        // Access to the location has been granted to the app.
+
+        if (checkSelfPermission(requireActivity(),Manifest.permission.ACCESS_COARSE_LOCATION) != PermissionChecker.PERMISSION_GRANTED) {
             // Permission to access the location is missing.
 
             //Pide permiso
@@ -364,37 +364,41 @@ class OldaysMapFragment : Fragment(), OnMapReadyCallback, GoogleMap.OnInfoWindow
             //TODO: Activar GPS si no lo tiene activado https://stackoverflow.com/a/44669039/3369131
 
         } else {
-                // Access to the location has been granted to the app.
+            // Access to the location has been granted to the app.
 
-                // Enabling MyLocation Layer of Google Map
-                mMap.isMyLocationEnabled = true
-                //  If the button is enabled, it is only shown when the my-location layer is enabled.
-                mMap.uiSettings.isMyLocationButtonEnabled = false
+            // Enabling MyLocation Layer of Google Map
+            mMap.isMyLocationEnabled = true
+            //  If the button is enabled, it is only shown when the my-location layer is enabled.
+            mMap.uiSettings.isMyLocationButtonEnabled = false
 
-                // Getting LocationManager object from System Service LOCATION_SERVICE
-                // As the getActivity() method is deprecated since API 28 you can just use:
-                // @Rafael T https://stackoverflow.com/a/13306297/3369131
-                val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            // Getting LocationManager object from System Service LOCATION_SERVICE
+            // As the getActivity() method is deprecated since API 28 you can just use:
+            // @Rafael T https://stackoverflow.com/a/13306297/3369131
+            val locationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-                // Creating a criteria object to retrieve provider
-                val criteria = Criteria()
+            // Creating a criteria object to retrieve provider
+            val criteria = Criteria()
 
-                // Getting the name of the best provider
-                val provider = locationManager.getBestProvider(criteria, true)
+            // Getting the name of the best provider
+            val provider = locationManager.getBestProvider(criteria, true)
 
-                // Getting Current Location
-                var location: Location? = null
+            // Getting Current Location
+            var location: Location? = null
 
-                if(provider!=null){
-                    location = locationManager.getLastKnownLocation(provider)
-                }
+            if(provider!=null){
+                location = locationManager.getLastKnownLocation(provider)
+            }
 
-                if (location != null) {
-                    val cameraPosition = CameraPosition.Builder().target(
-                        LatLng(location.latitude, location.longitude)).zoom(16f).build()
-                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-                }
+            if (location != null) {
+                val cameraPosition = CameraPosition.Builder().target(
+                    LatLng(location.latitude, location.longitude)).zoom(16f).build()
+                mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            }
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 

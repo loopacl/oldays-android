@@ -5,14 +5,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import androidx.annotation.RequiresApi
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_oldays_galeria.*
+import androidx.viewpager2.widget.ViewPager2
+import cl.loopa.android.oldays.databinding.ActivityMainBinding
+import cl.loopa.android.oldays.databinding.FragmentOldaysGaleriaBinding
 /**
  * A simple [Fragment] subclass.
  */
 class OldaysGaleriaFragment : Fragment() {
+
+    /*private var _binding: FragmentOldaysGaleriaBinding? = null
+    private val binding = DataBindingUtil.<FragmentOldaysGaleriaBinding.inflate(layoutInflater)*/
 
     val args: OldaysGaleriaFragmentArgs by navArgs()
 
@@ -34,34 +39,34 @@ class OldaysGaleriaFragment : Fragment() {
 
         val adapter = OldaysGaleriaAdapter()
 
-        pager.adapter = adapter
+        view.findViewById<ViewPager2>(R.id.pager).adapter = adapter
         adapter.setItem(args.urls)
 
         // Este código permite que la pantalla siguiente comience desde la foto seleccionada...
         // I just copied this @Daniel Kim code https://stackoverflow.com/a/57516428/3369131 and it worked
-        val recyclerView = pager.getChildAt(0)
+        val recyclerView = view.findViewById<ViewPager2>(R.id.pager).getChildAt(0)
         recyclerView.apply {
             val itemCount = adapter.itemCount// ?: 0
             @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-            if (itemCount >= cual) {
-                viewTreeObserver.addOnGlobalLayoutListener(object :
-                    ViewTreeObserver.OnGlobalLayoutListener {
-                    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
-                    override fun onGlobalLayout() {
-                        viewTreeObserver.removeOnGlobalLayoutListener(this)
+                if (itemCount >= cual) {
+                    viewTreeObserver.addOnGlobalLayoutListener(object :
+                        ViewTreeObserver.OnGlobalLayoutListener {
+                        @RequiresApi(Build.VERSION_CODES.JELLY_BEAN)
+                        override fun onGlobalLayout() {
+                            viewTreeObserver.removeOnGlobalLayoutListener(this)
 
-                        // ...Principalmente esta parte
-                        // False for without animation scroll
-                        pager.setCurrentItem(cual, false)
-                    }
-                })
-            }
+                            // ...Principalmente esta parte
+                            // False for without animation scroll
+                            view.findViewById<ViewPager2>(R.id.pager).setCurrentItem(cual, false)
+                        }
+                    })
+                }
         }
 
 
         if(args.urls!!.size <2){
             // Intento de bloquear el sweeping para poder recorrer la foto con el dedo
-            pager.isUserInputEnabled = false
+            view.findViewById<ViewPager2>(R.id.pager).isUserInputEnabled = false
         }
 
 
@@ -79,12 +84,9 @@ class OldaysGaleriaFragment : Fragment() {
         }*/
     }
 
-    @RequiresApi(Build.VERSION_CODES.KITKAT)
-    override fun onResume() {
-        super.onResume()
-        activity?.toolbar?.title = args.titulo
-        //activity?.toolbar?.visibility = View.GONE
-        activity?.window?.decorView?.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE
-    }
+    /*override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }*/
 
 }

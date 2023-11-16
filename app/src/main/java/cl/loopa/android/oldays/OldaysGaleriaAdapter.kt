@@ -19,6 +19,12 @@ class OldaysGaleriaAdapter : RecyclerView.Adapter<OldaysGaleriaViewHolder>() {
         notifyDataSetChanged()
     }
 
-    override fun getItemCount(): Int = list!!.size
+    override fun getItemCount(): Int {
+        if (list != null){
+            return list!!.size
+        } else{
+            return 0
+        }
+    }
 
 }

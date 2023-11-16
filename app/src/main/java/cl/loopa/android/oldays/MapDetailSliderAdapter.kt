@@ -55,9 +55,9 @@ class MapDetailSliderAdapter(
             v.setOnClickListener {
                 Log.d("foto", "Tocó: " + position)
                 val action = OldaysMapDetailFragmentDirections.actionOldaysMapDetailFragmentToOldaysGaleriaFragment()
-                action.index = position
+                /*TODO: action.index = position
                 action.urls = urls
-                action.titulo = titulo
+                action.titulo = titulo*/
 
                 findNavController(it).navigate(action)
             }

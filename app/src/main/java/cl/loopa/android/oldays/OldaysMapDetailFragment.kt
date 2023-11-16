@@ -16,8 +16,9 @@ import android.widget.TextView
 import androidx.core.text.HtmlCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.fragment_oldays_map_detail.*
+import cl.loopa.android.oldays.databinding.ActivityMainBinding
+import cl.loopa.android.oldays.databinding.FragmentAboutBinding
+import cl.loopa.android.oldays.databinding.FragmentOldaysMapDetailBinding
 
 /**
  * A simple [Fragment] subclass.
@@ -30,6 +31,9 @@ import kotlinx.android.synthetic.main.fragment_oldays_map_detail.*
  */
 class OldaysMapDetailFragment : Fragment() {
 
+    private var _binding: FragmentOldaysMapDetailBinding? = null
+    private val binding get() = _binding!!
+
     val args: OldaysMapDetailFragmentArgs by navArgs()
 
     private var listener: OnFragmentInteractionListener? = null
@@ -39,7 +43,9 @@ class OldaysMapDetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_oldays_map_detail, container, false)
+        //return inflater.inflate(R.layout.fragment_oldays_map_detail, container, false)
+        _binding = FragmentOldaysMapDetailBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -51,10 +57,10 @@ class OldaysMapDetailFragment : Fragment() {
         /*Navigation.findNavController(view)
             .getCurrentDestination()?.setLabel(name*/
 
-        val titulo: TextView = getView()!!.findViewById(R.id.titulo) as TextView
+        val titulo: TextView = binding.titulo
         titulo.text = args.placemark.mName.toString()
 
-        val descripcion: TextView = getView()!!.findViewById(R.id.descripcion) as TextView
+        val descripcion: TextView = binding.descripcion
         descripcion.text = stripHtml(args.placemark.mDescription.toString())
 
         // Google Maps KML put the list of images space separated urls in a <ExtendedData><Data name="gx_media_links">
@@ -63,14 +69,19 @@ class OldaysMapDetailFragment : Fragment() {
 
         if(urls!=null && urls.isNotEmpty()) {
             val adapter = MapDetailSliderAdapter(context, urls.toTypedArray(),args.placemark.mName)
-            slider.adapter = adapter
+            binding.slider.adapter = adapter
         }
     }
 
 
     override fun onResume() {
         super.onResume()
-        activity?.toolbar?.title = args.placemark.mName
+        //activity?.toolbar?.title = args.placemark.mName
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
     fun stripHtml(htmls: String): Spanned {
@@ -99,7 +110,6 @@ class OldaysMapDetailFragment : Fragment() {
         return txt
     }
 /*
-    // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }*/

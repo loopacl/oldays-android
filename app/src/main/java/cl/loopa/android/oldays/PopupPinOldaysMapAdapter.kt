@@ -49,7 +49,7 @@ abstract class PopupPinOldaysMapAdapter : GoogleMap.InfoWindowAdapter {
         this.inflater = inflater
     }*/
 
-    override fun getInfoWindow(marker: Marker?): View? {
+    /*override fun getInfoWindow(marker: Marker?): View? {
 
         // https://stackoverflow.com/a/31592393/3369131
         if (marker != null) {
@@ -65,7 +65,7 @@ abstract class PopupPinOldaysMapAdapter : GoogleMap.InfoWindowAdapter {
         }
 
         return null
-    }
+    }*/
 
 
     @SuppressLint("InflateParams")
